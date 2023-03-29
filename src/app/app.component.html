@@ -1,0 +1,17 @@
+<app-loader *ngIf="loading"></app-loader>
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>wallies</span>
+    <span class="example-spacer"></span>
+    <div actions="actions">
+      <app-avatar [matMenuTriggerFor]="menu" *ngIf="user.user | async as appUser" [user]="appUser"></app-avatar>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item="mat-menu-item" (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+<router-outlet></router-outlet>

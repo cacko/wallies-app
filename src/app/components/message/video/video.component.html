@@ -1,0 +1,6 @@
+<video controls [src]="data.content" #video>
+  The video tag is not supported by your browser. Click [here] to download the sound file.
+</video>
+<div caption *ngIf="data.caption" [attr.playing]="playing?'1':null">
+  <div>{{data.caption}}</div>
+</div>

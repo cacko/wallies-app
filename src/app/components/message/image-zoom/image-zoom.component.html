@@ -1,0 +1,11 @@
+<img [src]="data.src" alt="">
+<div controls>
+  <button *ngIf="data.caption" mat-icon-button [cdkCopyToClipboard]="data.caption"
+    (cdkCopyToClipboardCopied)="onClipboard()" matTooltip="copy prompt">
+    <mat-icon>content_copy</mat-icon>
+  </button>
+  <button mat-icon-button (click)="downloadImage()" [disabled]="buttonDisabled" matTooltip="download">
+    <mat-icon>download</mat-icon>
+  </button>
+</div>
+

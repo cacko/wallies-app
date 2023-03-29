@@ -1,0 +1,32 @@
+:host {
+  max-height: 50rem;
+  overflow-x: scroll;
+  display: flex;
+  flex-direction: column;
+
+  >div {
+    &[overflown] {
+      &:hover {
+        cursor: all-scroll;
+      }
+    }
+  }
+
+  div {
+    white-space: pre-wrap;
+    word-break: break-all;
+    &[centered] {
+      width: max-content;
+      align-self: center;
+    }
+  }
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+
+}

@@ -1,0 +1,55 @@
+@use "@angular/material" as mat;
+@include mat.core();
+$theme-primary: mat.define-palette(mat.$purple-palette,900);
+$theme-accent: mat.define-palette(mat.$purple-palette, 100, 200, 300);
+$theme-warn: mat.define-palette(mat.$amber-palette);
+$custom-typography: mat.define-typography-config($font-family: "Permanent Marker",
+  );
+
+$theme: mat.define-light-theme((color: (primary: $theme-primary,
+        accent: $theme-accent,
+        warn: $theme-warn,
+      ),
+      typography: $custom-typography,
+    ));
+@include mat.all-component-colors($theme);
+@include mat.all-component-typographies($theme);
+
+$angular-dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $theme-primary,
+      accent: $theme-accent,
+      warn: $theme-warn,
+    ),
+  )
+);
+
+:root {
+  @include mat.all-component-colors($angular-dark-theme);
+}
+
+html {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html,
+body {
+  height: 100%;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  padding: 0;
+  margin: 0;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

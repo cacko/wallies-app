@@ -1,0 +1,29 @@
+# https://taskfile.dev
+
+version: "3"
+
+vars:
+  PROJECT: wallies-app
+
+tasks:
+  default:
+    cmds:
+      - echo "{{.GREETING}}"
+    silent: true
+
+  push:
+    desc: commit and pushes current changes
+    cmds:
+      - git add .  || true
+      - git commit -am "$(curl -s https://commit.cacko.net/index.txt)" || true
+      - git push  || true
+
+  deploy:
+    desc: deploy
+    cmds:
+      - ng build --configuration production --service-worker
+      - tar cfz dist.tgz dist/{{.PROJECT}}
+      - scp dist.tgz open:/var/www/{{.PROJECT}}
+      - ssh open rm -rf /var/www/{{.PROJECT}}/dist
+      - ssh open tar zxf /var/www/{{.PROJECT}}/dist.tgz --directory /var/www/{{.PROJECT}}
+      - ssh open rm /var/www/{{.PROJECT}}/dist.tgz

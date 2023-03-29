@@ -1,0 +1,21 @@
+:host {
+  position: relative;
+  display: flex;
+
+  img {
+    max-height: 95vh;
+    max-width: 95vw;
+  }
+
+  [controls] {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: var(--font-color);
+    transition: opacity 0.2s ease-in-out;
+  }
+}

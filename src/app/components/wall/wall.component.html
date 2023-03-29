@@ -1,0 +1,6 @@
+<cdk-virtual-scroll-viewport appendOnly [itemSize]="10" class="example-viewport" cdkVirtualScrollingElement>
+
+  <app-image *cdkVirtualFor="let photo of photos;" item [data]="photo" (pendingDelete)="onDelete(photo, $event)">
+  </app-image>
+
+</cdk-virtual-scroll-viewport>
