@@ -2686,13 +2686,6 @@
     read-package-json-fast "^3.0.0"
     which "^3.0.0"
 
-"@offensichtbar-codestock/ngx-flex-masonry-grid@^11.2.7":
-  version "11.2.7"
-  resolved "https://registry.yarnpkg.com/@offensichtbar-codestock/ngx-flex-masonry-grid/-/ngx-flex-masonry-grid-11.2.7.tgz#6d99822b9c197ba611746f6765715222b7af267d"
-  integrity sha512-DaUgtmJ/3nAmvk5ffijIN/cfPKcXYLv5sKd3bVjBNaA0IeP9htNk7PC+RXOyJqDS5qgFcu/OyB2x9wt/I00B+g==
-  dependencies:
-    tslib "^2.0.0"
-
 "@protobufjs/aspromise@^1.1.1", "@protobufjs/aspromise@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@protobufjs/aspromise/-/aspromise-1.1.2.tgz#9b8b0cc663d669a7d8f6f5d0893a14d348f30fbf"

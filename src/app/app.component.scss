@@ -1,35 +1,19 @@
 :host {
 
-
-  .container.main {
-    min-height:   100vh;
+  mat-toolbar {
+    position: sticky;
+    top: 0;
+    left: 0;
     display: flex;
-    flex-direction: column;
-    padding:0;
-    row-gap: 0rem;
 
-    app-chat {
-      flex: 1;
-    }
-
-  }
-
-  mat-icon {
-    &:hover {
-      cursor: pointer;
-      filter: drop-shadow(0 0 0.15em var(--font-color));
+    mat-toolbar-row {
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: inherit;
+      justify-content: space-between;
     }
   }
-
-  [buttonquery] {
-    display: flex;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    justify-content: center;
-    padding: 0.5rem;
-  }
-
 
 
 }

@@ -1,8 +1,7 @@
 <app-loader *ngIf="loading"></app-loader>
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <span>wallies</span>
-    <span class="example-spacer"></span>
+    <div>wallies</div>
     <div actions="actions">
       <app-avatar [matMenuTriggerFor]="menu" *ngIf="user.user | async as appUser" [user]="appUser"></app-avatar>
       <mat-menu #menu="matMenu">

@@ -1,6 +1,7 @@
-<cdk-virtual-scroll-viewport appendOnly [itemSize]="10" class="example-viewport" cdkVirtualScrollingElement>
+<ul grid>
+  <li class="span3" *ngFor="let photo of photos;">
+    <app-image item [data]="photo" (pendingDelete)="onDelete(photo, $event)">
+    </app-image>
+  </li>
 
-  <app-image *cdkVirtualFor="let photo of photos;" item [data]="photo" (pendingDelete)="onDelete(photo, $event)">
-  </app-image>
-
-</cdk-virtual-scroll-viewport>
+</ul>
