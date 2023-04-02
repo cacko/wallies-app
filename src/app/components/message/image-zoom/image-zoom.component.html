@@ -5,7 +5,8 @@
 </div>
 <div controls>
   <button mat-icon-button (click)="downloadImage()" [disabled]="buttonDisabled" matTooltip="download">
-    <mat-icon>download</mat-icon>
+    <mat-icon [attr.hide]="buttonDisabled?'1':null">download</mat-icon>
+    <mat-progress-spinner color="warn" mode="indeterminate" [diameter]="buttonDisabled?24:0"></mat-progress-spinner>
   </button>
 </div>
 

@@ -49,6 +49,7 @@ import { WallComponent } from './components/wall/wall.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NgxFlexMasonryGridModule } from '@offensichtbar-codestock/ngx-flex-masonry-grid';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const MaterialModules = [
   MatInputModule,
@@ -73,7 +74,8 @@ const MaterialModules = [
   MatRippleModule,
   DragDropModule,
   MatToolbarModule,
-  ScrollingModule
+  ScrollingModule,
+  MatProgressSpinnerModule,
 ];
 
 @NgModule({
