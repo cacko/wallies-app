@@ -47,7 +47,8 @@ import { ApiService } from './service/api.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { WallComponent } from './components/wall/wall.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import {ScrollingModule} from '@angular/cdk/scrolling'; 
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { NgxFlexMasonryGridModule } from '@offensichtbar-codestock/ngx-flex-masonry-grid';
 
 const MaterialModules = [
   MatInputModule,
@@ -72,6 +73,7 @@ const MaterialModules = [
   MatRippleModule,
   DragDropModule,
   MatToolbarModule,
+  ScrollingModule
 ];
 
 @NgModule({
@@ -98,7 +100,7 @@ const MaterialModules = [
     SafePipeModule,
     MomentModule,
     HttpClientModule,
-
+    NgxFlexMasonryGridModule,
     LazyLoadImageModule,
     ...MaterialModules,
     provideFirebaseApp(() => initializeApp(environment.firebase)),

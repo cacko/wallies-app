@@ -6,7 +6,7 @@ $theme-warn: mat.define-palette(mat.$amber-palette);
 $custom-typography: mat.define-typography-config($font-family: "Permanent Marker",
   );
 
-$theme: mat.define-light-theme((color: (primary: $theme-primary,
+$theme: mat.define-dark-theme((color: (primary: $theme-primary,
         accent: $theme-accent,
         warn: $theme-warn,
       ),
@@ -15,18 +15,13 @@ $theme: mat.define-light-theme((color: (primary: $theme-primary,
 @include mat.all-component-colors($theme);
 @include mat.all-component-typographies($theme);
 
-$angular-dark-theme: mat.define-dark-theme((color: (primary: $theme-primary,
-        accent: $theme-accent,
-        warn: $theme-warn,
-      ),
-    ));
+@import "./mixins.scss";
 
 
 html {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  @include mat.all-component-colors($angular-dark-theme);
 
 
 }
@@ -39,13 +34,36 @@ html {
 
 html,
 body {
-  height: 100%;
+  height: 100vh;
   -ms-overflow-style: none;
   scrollbar-width: none;
   padding: 0;
   margin: 0;
 
+  app-root {
+    display: flex;
+    flex-direction: column;
+  }
   &::-webkit-scrollbar {
     display: none;
   }
+}
+
+.image-zoom-panel {
+  max-height: 95%;
+  height: auto;
+  padding: 0;
+  border-radius: 1em;
+  // img {
+  //   border: 0;
+  // }
+  @include lightbox;
+}
+
+.image-zoom-backdrop {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.subtitle {
+  font-family: Zeyada;
 }

@@ -1,9 +1,9 @@
-<img [src]="data.src" alt="">
+<img [src]="data.webp_src" alt="">
+<div caption>
+  <h1>{{data.title}}</h1>
+  <h3 class="subtitle">{{data.category}}</h3>
+</div>
 <div controls>
-  <button *ngIf="data.caption" mat-icon-button [cdkCopyToClipboard]="data.caption"
-    (cdkCopyToClipboardCopied)="onClipboard()" matTooltip="copy prompt">
-    <mat-icon>content_copy</mat-icon>
-  </button>
   <button mat-icon-button (click)="downloadImage()" [disabled]="buttonDisabled" matTooltip="download">
     <mat-icon>download</mat-icon>
   </button>

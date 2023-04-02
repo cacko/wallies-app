@@ -1,16 +1,11 @@
 import { Component, Inject, Renderer2 } from '@angular/core';
-import { snakeCase, uniqueId, deburr } from 'lodash-es';
+import { snakeCase } from 'lodash-es';
 import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { WallEntity } from 'src/app/entity/api.entity';
 
 declare var piexif: any;
 
-
-export interface ImageZoomEntity {
-  src: string;
-  query: string;
-  caption?: string;
-}
 
 @Component({
   selector: 'app-image-zoom',
@@ -24,7 +19,7 @@ export class ImageZoomComponent {
     public dialogRef: DialogRef<string>,
     private snackbar: MatSnackBar,
     @Inject(DIALOG_DATA)
-    public data: ImageZoomEntity,
+    public data: WallEntity,
     private renderer: Renderer2
   ) {
     const script = this.renderer.createElement('script');
@@ -33,8 +28,7 @@ export class ImageZoomComponent {
   }
 
   get imageFilename(): string | null {
-    // const rand = faker.random.words(3);
-    return `${snakeCase("!23")}_${uniqueId()}.jpg`;
+    return `${snakeCase(this.data.title)}}.png`;
   }
 
   onClipboard() {
@@ -46,22 +40,22 @@ export class ImageZoomComponent {
     const canvas = document.createElement('canvas');
     const image = new Image();
     image.setAttribute('crossorigin', 'anonymous');
-    image.src = this.data.src;
+    image.src = this.data.raw_src;
     image.addEventListener('load', () => {
       canvas.width = image.naturalWidth;
       canvas.height = image.naturalHeight;
       canvas.getContext('2d')?.drawImage(image, 0, 0);
-      const dataURL = canvas.toDataURL('image/jpeg', 0.9);
-      const zeroth = {
-        [piexif.ImageIFD.ImageDescription]: deburr(this.data.caption || ''),
-      };
-      const exifObj = { '0th': zeroth };
-      const exifbytes = piexif.dump(exifObj);
-      const dataURLWithExif = piexif.insert(exifbytes, dataURL);
+      const dataURL = canvas.toDataURL('image/png');
+      // const zeroth = {
+      //   [piexif.ImageIFD.ImageDescription]: deburr(this.data.caption || ''),
+      // };
+      // const exifObj = { '0th': zeroth };
+      // const exifbytes = piexif.dump(exifObj);
+      // const dataURLWithExif = piexif.insert(exifbytes, dataURL);
 
       const link = document.createElement('a');
       link.download = this.imageFilename || '';
-      link.href = dataURLWithExif;
+      link.href = dataURL;
       link.setAttribute('target', '_blank');
       link.click();
       link.remove();

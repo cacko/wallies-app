@@ -15,6 +15,7 @@ export interface WallEntity {
   webp_src: string;
   category: string;
   colors: string;
+  last_modified: number;
 }
 
 

@@ -1,7 +1,6 @@
-<ul grid>
-  <li class="span3" *ngFor="let photo of photos;">
-    <app-image item [data]="photo" (pendingDelete)="onDelete(photo, $event)">
-    </app-image>
-  </li>
-
-</ul>
+  <osb-ngx-flexmasonry-grid grid>
+    <osb-ngx-flexmasonry-grid-item *ngFor="let photo of photos;">
+      <app-image item [data]="photo" (pendingDelete)="onDelete(photo, $event)">
+      </app-image>
+    </osb-ngx-flexmasonry-grid-item>
+    </osb-ngx-flexmasonry-grid>

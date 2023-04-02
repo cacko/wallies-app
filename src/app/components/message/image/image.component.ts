@@ -25,7 +25,7 @@ export class ImageComponent implements OnInit {
     fromEvent(img, 'load').subscribe(_ => this.layout.emit(true));
     // this.src = this.data.content;
     // this.contentType = this.data.contentType || 'image/webp';
-    // this.caption = this.data.caption || '';
+    this.caption = this.data.title || '';
   }
 
   @Input() data!: WallEntity;
@@ -37,11 +37,7 @@ export class ImageComponent implements OnInit {
       backdropClass: 'image-zoom-backdrop',
       hasBackdrop: true,
       autoFocus: 'dialog',
-      data: {
-        src: this.src,
-        query: this.query,
-        caption: this.caption,
-      },
+      data: this.data,
     });
 
     dialogRef.closed.subscribe((result) => {});

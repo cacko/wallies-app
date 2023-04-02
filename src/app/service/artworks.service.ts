@@ -13,12 +13,14 @@ export class ArtworksService {
   constructor(private api: ApiService) {}
 
   getArtwork(): any {
-    return this.api.fetch(ApiType.ARTWORKS).pipe(
-      map((data: any) => {
-        console.log(data);
-        return data;
-      })
-    );
+    return this.api.fetch(ApiType.ARTWORKS);
+    // console.log(s);
+    // s.pipe(
+    //   map((data: any) => {
+    //     console.log(data);
+    //     return data;
+    //   })
+    // );
   }
 }
 

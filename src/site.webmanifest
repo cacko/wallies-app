@@ -1,8 +1,32 @@
 {
-  "name": "Ботьо",
-  "short_name": "Ботьо",
+  "name": "Wallies",
+  "short_name": "Wallies",
   "description": "Personal assistant",
   "icons": [
+    {
+      "src": "/assets/icons/android-icon-48x48.png",
+      "sizes": "48x48",
+      "type": "image/png",
+      "density": "1.0"
+    },
+    {
+      "src": "/assets/icons/android-icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "density": "1.5"
+    },
+    {
+      "src": "/assets/icons/android-icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "density": "2.0"
+    },
+    {
+      "src": "/assets/icons/android-icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "density": "2.5"
+    },
     {
       "src": "/assets/icons/android-chrome-192x192.png",
       "sizes": "192x192",
@@ -20,14 +44,38 @@
       "purpose": "maskable"
     },
     {
-      "src": "/assets/icons/maskable_icon_x512",
+      "src": "/assets/icons/maskable_icon.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    },
+    {
+      "src": "/assets/icons/maskable_icon_x48.png",
+      "sizes": "48x48",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/assets/icons/maskable_icon_x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/assets/icons/maskable_icon_x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/assets/icons/maskable_icon_x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "maskable any"
     }
   ],
-  "theme_color": "#9153c3",
-  "background_color": "#000000",
+  "theme_color": "#9152c4",
+  "background_color": "#9152c4",
   "display": "standalone",
   "scope": "./",
   "start_url": "/",

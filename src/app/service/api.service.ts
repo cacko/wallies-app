@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject, tap, map, of } from 'rxjs';
+import { Observable, Subject, tap, map, of, last } from 'rxjs';
 import { ApiConfig, ApiType, WSLoading } from '../entity/api.entity';
 import {
   HttpClient,
@@ -12,7 +12,7 @@ import {
 } from '@angular/common/http';
 import * as moment from 'moment';
 import { Params } from '@angular/router';
-import { isEmpty, omitBy } from 'lodash-es';
+import { isEmpty, omitBy, orderBy, head } from 'lodash-es';
 import * as md5 from 'md5';
 
 interface CacheEntry {
@@ -60,35 +60,43 @@ export class ApiService implements HttpInterceptor {
     this.loaderSubject.next(WSLoading.BLOCKING_OFF);
   }
 
-  fetch(type: ApiType, query: string = "", params: Params = {}): Observable<any> {
-    let id = query;
+  fetch(
+    type: ApiType,
+    query: string = '',
+    params: Params = {}
+  ): Observable<any> {
+    return new Observable((subscriber: any) => {
+      let id = query;
 
-    const cacheKey = this.cacheKey(type, id, params);
-
-    // const cached = this.inCache(cacheKey);
-
-    // if (cached) {
-    //   return of(cached);
-    // }
-    return this.httpClient
-      .get(`${ApiConfig.BASE_URI}/${type}/${id}`, {
-        params: omitBy(params, isEmpty),
-      })
-      .pipe(
-        map((data: any) => {
-          // if (data) {
-          //   localStorage.setItem(
-          //     cacheKey,
-          //     JSON.stringify({ data: data, timestamp: moment() })
-          //   );
-          // }
-          return data;
+      const cacheKey = this.cacheKey(type, id);
+      const cached = this.inCache(cacheKey) || [];
+      if (cached.length) {
+        params['last_modified'] = head(orderBy(cached, ['last_modified'], ['desc'])
+          ).last_modified;
+        subscriber.next(cached);
+      }
+      this.httpClient
+        .get(`${ApiConfig.BASE_URI}/${type}/${id}`, {
+          params
         })
-      );
+        .subscribe({
+          next: (data: any) => {
+            if (data.length) {
+              const newData = cached.concat(data);
+              localStorage.setItem(
+                cacheKey,
+                JSON.stringify({ data: newData, timestamp: moment() })
+              );
+            subscriber.next(data);
+            }
+          },
+          error: (error: any) => console.debug(error)
+        })
+    });
   }
 
-  private cacheKey(type: ApiType, id: string, params: Params = {}): string {
-    return md5(`${type}-${id}-${JSON.stringify(params)}`);
+  private cacheKey(type: ApiType, id: string,): string {
+    return md5(`${type}-${id}`);
   }
 
   private inCache(key: string): any {

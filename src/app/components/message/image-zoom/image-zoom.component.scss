@@ -7,6 +7,18 @@
     max-width: 95vw;
   }
 
+  [caption] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: opacity 0.2s ease-in-out;
+    padding: 1em;
+  }
+
   [controls] {
     position: absolute;
     bottom: 0;
@@ -15,7 +27,6 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    color: var(--font-color);
     transition: opacity 0.2s ease-in-out;
   }
 }
