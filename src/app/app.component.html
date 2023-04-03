@@ -1,24 +1,35 @@
 <app-loader *ngIf="loading"></app-loader>
 <mat-toolbar color="primary">
-    <div title>wallies</div>
-    <div actions *ngIf="user.user | async as appUser">
-      <button mat-icon-button matTooltip="Categories" [matMenuTriggerFor]="catmenu">
-        <mat-icon [matBadge]="selectedCategories.length" matBadgeColor="warn"
-          [matBadgeHidden]="selectedCategories.length == 0">category</mat-icon>
+  <div title>wallies</div>
+  <div actions *ngIf="user.user | async as appUser">
+    <button mat-icon-button matTooltip="Categories" [matMenuTriggerFor]="catmenu">
+      <mat-icon [matBadge]="selectedCategories.length" matBadgeColor="warn"
+        [matBadgeHidden]="selectedCategories.length == 0">category</mat-icon>
+    </button>
+    <mat-menu #catmenu="matMenu">
+      <app-categories [selected]="selectedCategories" (change)="onCategoryChange($event)"
+        (click)="$event.stopPropagation();"></app-categories>
+    </mat-menu>
+    <button mat-icon-button [matMenuTriggerFor]="usermenu">
+      <app-avatar [user]="appUser"></app-avatar>
+    </button>
+    <mat-menu #usermenu="matMenu">
+      <button mat-menu-item="mat-menu-item" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
       </button>
-      <mat-menu #catmenu="matMenu">
-        <app-categories [selected]="selectedCategories" (change)="onCategoryChange($event)"
-          (click)="$event.stopPropagation();"></app-categories>
-      </mat-menu>
-      <button mat-icon-button [matMenuTriggerFor]="usermenu">
-        <app-avatar [user]="appUser"></app-avatar>
+      <mat-divider></mat-divider>
+      <button mat-menu-item="mat-menu-item">
+        <mat-icon>laptop_mac</mat-icon>
+        <span><a menu-link href="https://github.com/cacko/walldo/releases" target="_blank"
+            rel="external noopener">Walldo</a></span>
       </button>
-      <mat-menu #usermenu="matMenu">
-        <button mat-menu-item="mat-menu-item" (click)="logout()">
-          <mat-icon>logout</mat-icon>
-          <span>Logout</span>
-        </button>
-      </mat-menu>
+      <button mat-menu-item="mat-menu-item">
+        <mat-icon>android</mat-icon>
+        <span><a menu-link href="https://play.google.com/store/apps/details?id=net.cacko.wallies" target="_blank"
+            rel="external noopener">Wallies</a></span>
+      </button>
+    </mat-menu>
   </div>
 </mat-toolbar>
 <router-outlet></router-outlet>
