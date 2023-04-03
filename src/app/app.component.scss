@@ -2,12 +2,11 @@
 
   mat-toolbar {
     display: flex;
-    height: 64px;
-    mat-toolbar-row {
-      justify-content: space-between;
-      [actions] {
-        display: flex;
-      }
+    justify-content: space-between;
+    height: 3em;
+    align-items: center;
+    [actions] {
+      display: flex;
     }
   }
 

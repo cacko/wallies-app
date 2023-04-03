@@ -1,11 +1,8 @@
-import { Component, Inject, Renderer2 } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { snakeCase } from 'lodash-es';
 import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { WallEntity } from 'src/app/entity/api.entity';
-
-declare var piexif: any;
-
 
 @Component({
   selector: 'app-image-zoom',
@@ -19,13 +16,8 @@ export class ImageZoomComponent {
     public dialogRef: DialogRef<string>,
     private snackbar: MatSnackBar,
     @Inject(DIALOG_DATA)
-    public data: WallEntity,
-    private renderer: Renderer2
-  ) {
-    const script = this.renderer.createElement('script');
-    this.renderer.setAttribute(script, 'src', 'assets/piexif.js');
-    this.renderer.appendChild(document.head, script);
-  }
+    public data: WallEntity
+  ) {}
 
   get imageFilename(): string | null {
     return `${snakeCase(this.data.title)}}.png`;

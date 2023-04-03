@@ -17,13 +17,10 @@ $theme: mat.define-dark-theme((color: (primary: $theme-primary,
 
 @import "./mixins.scss";
 
-
 html {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-
-
 }
 
 *,
@@ -44,6 +41,7 @@ body {
     display: flex;
     flex-direction: column;
   }
+
   &::-webkit-scrollbar {
     display: none;
   }

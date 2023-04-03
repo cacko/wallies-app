@@ -83,8 +83,11 @@ export class AppComponent implements OnInit {
     });
     this.activatedRoute.fragment.subscribe({
       next: (data: any) => {
-        const filter = JSON.parse(data);
-        this.selectedCategories = filter["c"] || [];
+        try {
+          const filter = JSON.parse(data);
+          this.selectedCategories = filter?.c || [];
+        } catch (err) {
+        }
       },
     });
   }

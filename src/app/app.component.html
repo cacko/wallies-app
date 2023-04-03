@@ -1,6 +1,5 @@
 <app-loader *ngIf="loading"></app-loader>
 <mat-toolbar color="primary">
-  <mat-toolbar-row>
     <div>wallies</div>
     <div actions *ngIf="user.user | async as appUser">
       <button mat-icon-button matTooltip="Categories" [matMenuTriggerFor]="catmenu">
@@ -20,7 +19,6 @@
           <span>Logout</span>
         </button>
       </mat-menu>
-    </div>
-  </mat-toolbar-row>
+  </div>
 </mat-toolbar>
 <router-outlet></router-outlet>
