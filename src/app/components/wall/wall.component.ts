@@ -1,9 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { WallCategory, WallEntity } from 'src/app/entity/api.entity';
 import { isEmpty, isString, orderBy } from 'lodash-es';
 import { ChangeDetectionStrategy, ViewChild } from '@angular/core';
-import { Observable, Subject, Subscriber, interval, of } from 'rxjs';
+import { of } from 'rxjs';
 import { NgxFlexMasonryGridComponent } from '@offensichtbar-codestock/ngx-flex-masonry-grid';
 
 interface RouteDataEntity {
@@ -50,10 +50,9 @@ export class WallComponent implements OnInit {
 
   private doFilter() {
     if (this.items.length > 0) {
-      const categories =
-       isEmpty(this.filter?.c)
-          ? Object.values(WallCategory).filter(isString)
-          : this.filter.c;
+      const categories = isEmpty(this.filter?.c)
+        ? Object.values(WallCategory).filter(isString)
+        : this.filter.c;
       this.photos = this.items.filter((p) => categories?.includes(p.category));
       this.updateLayout();
     }

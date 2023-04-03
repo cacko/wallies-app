@@ -52,8 +52,8 @@ import { NgxFlexMasonryGridModule } from '@offensichtbar-codestock/ngx-flex-maso
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { ColorsComponent } from './components/colors/colors.component';
-import {MatChipsModule} from '@angular/material/chips';
-import {MatBadgeModule} from '@angular/material/badge';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatBadgeModule } from '@angular/material/badge';
 
 const MaterialModules = [
   MatInputModule,
@@ -81,7 +81,7 @@ const MaterialModules = [
   ScrollingModule,
   MatProgressSpinnerModule,
   MatChipsModule,
-  MatBadgeModule
+  MatBadgeModule,
 ];
 
 @NgModule({

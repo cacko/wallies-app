@@ -2,11 +2,20 @@
 
   mat-toolbar {
     display: flex;
+    flex-direction: column-reverse;
     justify-content: space-between;
-    height: 3em;
+    height: 100vh;
+    width: 3em;
     align-items: center;
+
     [actions] {
       display: flex;
+      flex-direction: column-reverse;
+    }
+
+    [title] {
+      writing-mode: sideways-lr;
+      padding: 16px 0px;
     }
   }
 
