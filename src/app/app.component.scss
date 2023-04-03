@@ -5,6 +5,9 @@
     height: 64px;
     mat-toolbar-row {
       justify-content: space-between;
+      [actions] {
+        display: flex;
+      }
     }
   }
 

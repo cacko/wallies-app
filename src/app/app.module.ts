@@ -50,6 +50,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NgxFlexMasonryGridModule } from '@offensichtbar-codestock/ngx-flex-masonry-grid';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CategoriesComponent } from './components/categories/categories.component';
+import { ColorsComponent } from './components/colors/colors.component';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatBadgeModule} from '@angular/material/badge';
 
 const MaterialModules = [
   MatInputModule,
@@ -76,6 +80,8 @@ const MaterialModules = [
   MatToolbarModule,
   ScrollingModule,
   MatProgressSpinnerModule,
+  MatChipsModule,
+  MatBadgeModule
 ];
 
 @NgModule({
@@ -87,6 +93,8 @@ const MaterialModules = [
     ImageComponent,
     ImageZoomComponent,
     WallComponent,
+    CategoriesComponent,
+    ColorsComponent,
   ],
   imports: [
     BrowserModule,

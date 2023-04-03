@@ -4,9 +4,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { interval } from 'rxjs';
 import { UserService } from './service/user.service';
 import { Auth } from '@angular/fire/auth';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Platform } from '@angular/cdk/platform';
-import { some } from 'lodash-es';
+import { slice, some } from 'lodash-es';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from './service/api.service';
 import { WSLoading } from './entity/api.entity';
@@ -31,6 +31,7 @@ export class AppComponent implements OnInit {
   loading = true;
   updating = false;
   connected = false;
+  selectedCategories: string[] = [];
 
   constructor(
     private swUpdate: SwUpdate,
@@ -40,7 +41,8 @@ export class AppComponent implements OnInit {
     private auth: Auth,
     private router: Router,
     public platform: Platform,
-    private api: ApiService
+    private api: ApiService,
+    private activatedRoute: ActivatedRoute
   ) {
     this.api.showLoader();
     if (this.swUpdate.isEnabled) {
@@ -79,6 +81,12 @@ export class AppComponent implements OnInit {
       //   this.ws.disconnect();
       // }
     });
+    this.activatedRoute.fragment.subscribe({
+      next: (data: any) => {
+        const filter = JSON.parse(data);
+        this.selectedCategories = filter["c"] || [];
+      },
+    });
   }
 
   get isMobile(): boolean {
@@ -87,5 +95,12 @@ export class AppComponent implements OnInit {
 
   logout() {
     this.auth.signOut().then(() => this.router.navigateByUrl('/login'));
+  }
+
+  onCategoryChange(selected: string[]) {
+    this.selectedCategories = selected;
+    this.router.navigate([''], {
+      fragment: JSON.stringify({c: this.selectedCategories})
+    });
   }
 }

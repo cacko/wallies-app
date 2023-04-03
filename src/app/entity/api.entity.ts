@@ -7,15 +7,27 @@ export enum ApiType {
   ARTWORKS = 'artworks',
 }
 
+export enum WallCategory {
+  MINIMAL = "minimal",
+  ABSTRACT = "abstract",
+  MOVIES = "movies",
+  SPORT = "sport",
+  GAMES = "games",
+  CARTOON = "cartoon",
+  FANTASY = "fantasy",
+  NATURE = "nature"
+}
+
 
 export interface WallEntity {
   title: string;
   raw_src: string;
   web_uri: string;
   webp_src: string;
-  category: string;
+  category: WallCategory;
   colors: string;
   last_modified: number;
+  filtered?: boolean;
 }
 
 

@@ -73,7 +73,6 @@ export class ApiService implements HttpInterceptor {
       if (cached.length) {
         params['last_modified'] = head(orderBy(cached, ['last_modified'], ['desc'])
           ).last_modified;
-        subscriber.next(cached);
       }
       this.httpClient
         .get(`${ApiConfig.BASE_URI}/${type}/${id}`, {
@@ -82,13 +81,13 @@ export class ApiService implements HttpInterceptor {
         .subscribe({
           next: (data: any) => {
             if (data.length) {
-              const newData = cached.concat(data);
+              cached.push(...data);
               localStorage.setItem(
                 cacheKey,
-                JSON.stringify({ data: newData, timestamp: moment() })
+                JSON.stringify({ data: cached, timestamp: moment() })
               );
-            subscriber.next(data);
             }
+            subscriber.next(cached);
           },
           error: (error: any) => console.debug(error)
         })

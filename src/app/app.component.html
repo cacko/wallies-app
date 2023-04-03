@@ -2,9 +2,19 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
     <div>wallies</div>
-    <div actions="actions">
-      <app-avatar [matMenuTriggerFor]="menu" *ngIf="user.user | async as appUser" [user]="appUser"></app-avatar>
-      <mat-menu #menu="matMenu">
+    <div actions *ngIf="user.user | async as appUser">
+      <button mat-icon-button matTooltip="Categories" [matMenuTriggerFor]="catmenu">
+        <mat-icon [matBadge]="selectedCategories.length" matBadgeColor="warn"
+          [matBadgeHidden]="selectedCategories.length == 0">category</mat-icon>
+      </button>
+      <mat-menu #catmenu="matMenu">
+        <app-categories [selected]="selectedCategories" (change)="onCategoryChange($event)"
+          (click)="$event.stopPropagation();"></app-categories>
+      </mat-menu>
+      <button mat-icon-button [matMenuTriggerFor]="usermenu">
+        <app-avatar [user]="appUser"></app-avatar>
+      </button>
+      <mat-menu #usermenu="matMenu">
         <button mat-menu-item="mat-menu-item" (click)="logout()">
           <mat-icon>logout</mat-icon>
           <span>Logout</span>

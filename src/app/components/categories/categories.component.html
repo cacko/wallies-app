@@ -1,0 +1,3 @@
+<mat-chip-listbox multiple aria-label="Category" aria-orientation="vertical" (change)="onChange($event)">
+  <mat-chip-option *ngFor="let cat of categories" [selected]="selected.includes(cat)">{{cat}}</mat-chip-option>
+</mat-chip-listbox>

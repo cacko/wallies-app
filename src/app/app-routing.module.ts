@@ -10,13 +10,13 @@ import { WallComponent } from './components/wall/wall.component';
 import { ArtworksService, artworksResolver } from './service/artworks.service';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
-const redirectLoggedInToHome = () => redirectLoggedInTo(['']);
+const redirectLoggedInToHome = () => redirectLoggedInTo(['w']);
 
 const routes: Routes = [
   {
     path: '',
     component: WallComponent,
-    pathMatch: 'full',
+    pathMatch: 'prefix',
     resolve: {
       data: artworksResolver,
     },
@@ -33,7 +33,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(routes),
+  ],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
