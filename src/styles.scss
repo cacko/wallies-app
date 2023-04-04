@@ -39,7 +39,11 @@ body {
 
   app-root {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+
+    @media screen and (min-width: 450px) {
+      flex-direction: row;
+    }
   }
 
   &::-webkit-scrollbar {

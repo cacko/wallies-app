@@ -1,8 +1,22 @@
 :host {
-display: flex;
+  display: flex;
   width: 100%;
+  display: flex;
+  transition: all 300ms;
+  transform: matrix(1, 0, 0, 1, 0, 0);
+
+  &:hover {
+    box-shadow: rgba(172, 160, 160, 0.534) 0px 5px 15px,
+      rgba(183, 170, 170, 0.669) 0px -15px 15px,
+      rgba(0, 0, 0, 0.12) 0px 4px 6px,
+      rgba(0, 0, 0, 0.17) 0px 2px 3px,
+      rgba(0, 0, 0, 0.09) 0px -1px 5px;
+    border-radius: 0.3em;
+  }
+
   img {
     width: 100%;
     cursor: pointer;
+
   }
 }

@@ -2,11 +2,16 @@
   height: 100vh;
   overflow: hidden;
   overflow-y: auto;
+
   [grid] {
-    grid-template-columns: repeat(auto-fit, minmax(550px, 1fr));
     display: grid;
     grid-auto-flow: dense;
-    height: auto !important;
+
+    @media screen and (min-width: 450px) {
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+
+    }
+
     [grid-item] {
       &[filtered] {
         display: none;
@@ -14,4 +19,3 @@
     }
   }
 }
-
