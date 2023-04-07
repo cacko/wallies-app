@@ -4,7 +4,8 @@ export enum ApiConfig {
 
 
 export enum ApiType {
-  ARTWORKS = 'artworks',
+  ARTWORKS = "artworks",
+  ARTWORK = "artwork"
 }
 
 export enum WallCategory {

@@ -33,8 +33,8 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { LoginComponent } from './components/login/login.component';
 import { SETTINGS as AUTH_SETTINGS } from '@angular/fire/compat/auth';
 import { AvatarComponent } from './components/avatar/avatar.component';
-import { ImageComponent } from './components/message/image/image.component';
-import { ImageZoomComponent } from './components/message/image-zoom/image-zoom.component';
+import { ImageComponent } from './components/image/image.component';
+import { ImageZoomComponent } from './components/image-zoom/image-zoom.component';
 import { SafePipeModule } from 'safe-pipe';
 import { PlatformModule } from '@angular/cdk/platform';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
@@ -54,6 +54,7 @@ import { CategoriesComponent } from './components/categories/categories.componen
 import { ColorsComponent } from './components/colors/colors.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatBadgeModule } from '@angular/material/badge';
+import { ViewComponent } from './components/view/view.component';
 
 const MaterialModules = [
   MatInputModule,
@@ -95,6 +96,7 @@ const MaterialModules = [
     WallComponent,
     CategoriesComponent,
     ColorsComponent,
+    ViewComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,10 +1,9 @@
 import { Component, Inject } from '@angular/core';
-import { snakeCase, uniqueId } from 'lodash-es';
+import { snakeCase } from 'lodash-es';
 import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { WallEntity } from 'src/app/entity/api.entity';
 import { saveAs } from 'file-saver';
-import { faker } from '@faker-js/faker';
 
 @Component({
   selector: 'app-image-zoom',
@@ -22,8 +21,7 @@ export class ImageZoomComponent {
   ) {}
 
   get imageFilename(): string {
-    const rand = faker.random.words(3);
-    return `${snakeCase(rand)}_${uniqueId()}.png`;
+    return `${snakeCase(this.data.title)}.png`;
   }
 
   onClipboard() {

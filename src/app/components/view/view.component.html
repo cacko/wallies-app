@@ -1,0 +1,16 @@
+<div info>
+  <caption>
+    <h1>{{data.title}}</h1>
+    <h3 class="subtitle">{{data.category}}</h3>
+  </caption>
+  <div controls>
+    <button mat-icon-button (click)="downloadImage()" [disabled]="buttonDisabled" matTooltip="download">
+      <mat-icon [attr.hide]="buttonDisabled?'1':null">download</mat-icon>
+      <mat-progress-spinner color="warn" mode="indeterminate" [diameter]="buttonDisabled?24:0"></mat-progress-spinner>
+    </button>
+  </div>
+</div>
+<div image-container [ngStyle]="getImageStyle()">
+
+</div>
+

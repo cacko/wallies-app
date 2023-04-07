@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject, tap, map, of, last } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { ApiConfig, ApiType, WSLoading } from '../entity/api.entity';
 import {
   HttpClient,
@@ -12,7 +12,7 @@ import {
 } from '@angular/common/http';
 import * as moment from 'moment';
 import { Params } from '@angular/router';
-import { isEmpty, omitBy, orderBy, head } from 'lodash-es';
+import { isEmpty, omitBy, orderBy, head, isObject } from 'lodash-es';
 import * as md5 from 'md5';
 
 interface CacheEntry {
@@ -76,17 +76,22 @@ export class ApiService implements HttpInterceptor {
       }
       this.httpClient
         .get(`${ApiConfig.BASE_URI}/${type}/${id}`, {
-          params
+          params: omitBy(params, isEmpty)
         })
         .subscribe({
           next: (data: any) => {
-            if (data.length) {
-              cached.push(...data);
-              localStorage.setItem(
-                cacheKey,
-                JSON.stringify({ data: cached, timestamp: moment() })
-              );
+            if (isObject(data)) {
+              cached.push(data);
             }
+            else if (data.length) {
+              cached.push(...data);
+            } else {
+              throw Error("no data");
+            }
+            localStorage.setItem(
+              cacheKey,
+              JSON.stringify({ data: cached, timestamp: moment() })
+            );
             subscriber.next(cached);
           },
           error: (error: any) => console.debug(error)

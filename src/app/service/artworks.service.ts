@@ -14,13 +14,6 @@ export class ArtworksService {
 
   getArtwork(): any {
     return this.api.fetch(ApiType.ARTWORKS);
-    // console.log(s);
-    // s.pipe(
-    //   map((data: any) => {
-    //     console.log(data);
-    //     return data;
-    //   })
-    // );
   }
 }
 
