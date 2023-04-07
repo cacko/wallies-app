@@ -1,6 +1,7 @@
 :host {
   display: flex;
   width: 100%;
+
   display: flex;
   transition: all 300ms;
   transform: matrix(1, 0, 0, 1, 0, 0);
@@ -17,6 +18,7 @@
   img {
     width: 100%;
     cursor: pointer;
+    border-image: none;
 
   }
 }

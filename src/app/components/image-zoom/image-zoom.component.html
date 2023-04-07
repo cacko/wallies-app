@@ -1,6 +1,6 @@
 <img [src]="data.webp_src" alt="">
 <div caption>
-  <h1>{{data.title}}</h1>
+  <h1 (click)="goToView()">{{data.title}}</h1>
   <h3 class="subtitle">{{data.category}}</h3>
 </div>
 <div controls>

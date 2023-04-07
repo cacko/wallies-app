@@ -12,7 +12,16 @@ import {
 } from '@angular/common/http';
 import * as moment from 'moment';
 import { Params } from '@angular/router';
-import { isEmpty, omitBy, orderBy, head, isObject } from 'lodash-es';
+import {
+  omitBy,
+  orderBy,
+  head,
+  isObject,
+  isArray,
+  filter,
+  map,
+  isUndefined,
+} from 'lodash-es';
 import * as md5 from 'md5';
 
 interface CacheEntry {
@@ -71,22 +80,23 @@ export class ApiService implements HttpInterceptor {
       const cacheKey = this.cacheKey(type, id);
       const cached = this.inCache(cacheKey) || [];
       if (cached.length) {
-        params['last_modified'] = head(orderBy(cached, ['last_modified'], ['desc'])
-          ).last_modified;
+        params['last_modified'] = head(
+          orderBy(cached, ['last_modified'], ['desc'])
+        ).last_modified;
       }
       this.httpClient
         .get(`${ApiConfig.BASE_URI}/${type}/${id}`, {
-          params: omitBy(params, isEmpty)
+          params: omitBy(params, isUndefined),
         })
         .subscribe({
           next: (data: any) => {
-            if (isObject(data)) {
+            if (isArray(data)) {
+              const cachedIds = map(cached, 'id');
+              cached.push(...filter(data, (d) => !cachedIds.includes(d.id)));
+            } else if (isObject(data)) {
               cached.push(data);
-            }
-            else if (data.length) {
-              cached.push(...data);
             } else {
-              throw Error("no data");
+              return;
             }
             localStorage.setItem(
               cacheKey,
@@ -94,12 +104,12 @@ export class ApiService implements HttpInterceptor {
             );
             subscriber.next(cached);
           },
-          error: (error: any) => console.debug(error)
-        })
+          error: (error: any) => console.debug(error),
+        });
     });
   }
 
-  private cacheKey(type: ApiType, id: string,): string {
+  private cacheKey(type: ApiType, id: string): string {
     return md5(`${type}-${id}`);
   }
 

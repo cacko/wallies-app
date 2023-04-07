@@ -18,7 +18,7 @@ const routes: Routes = [
   {
     path: '',
     component: WallComponent,
-    pathMatch: 'prefix',
+    pathMatch: 'full',
     resolve: {
       data: artworksResolver,
     },

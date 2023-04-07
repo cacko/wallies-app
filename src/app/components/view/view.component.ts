@@ -26,13 +26,16 @@ export class ViewComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.data.subscribe({
       next: (data: RouteDataEntity) => {
-          this.data = head(data.data) || {  title: "",
-            raw_src: "",
-            web_uri: "",
-            webp_src: "",
-            category: WallCategory.ABSTRACT,
-            colors: "",
-            last_modified: 0};
+        this.data = head(data.data) || {
+          title: '',
+          id: '',
+          raw_src: '',
+          web_uri: '',
+          webp_src: '',
+          category: WallCategory.ABSTRACT,
+          colors: '',
+          last_modified: 0,
+        };
       },
     });
   }
@@ -44,7 +47,7 @@ export class ViewComponent implements OnInit {
   getImageStyle(): {
     [key: string]: string;
   } {
-    return {"background-image": `url("${this.data.webp_src}")`};
+    return { 'background-image': `url("${this.data.webp_src}")` };
   }
 
   onClipboard() {

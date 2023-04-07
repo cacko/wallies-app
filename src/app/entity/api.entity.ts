@@ -21,6 +21,7 @@ export enum WallCategory {
 
 
 export interface WallEntity {
+  id: string;
   title: string;
   raw_src: string;
   web_uri: string;

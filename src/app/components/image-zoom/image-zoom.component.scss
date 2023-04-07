@@ -1,10 +1,13 @@
 :host {
   position: relative;
   display: flex;
-
+  border: none;
+  // border-radius: 0.3em;
   img {
     max-height: 95vh;
     max-width: 95vw;
+    border: none;
+
   }
 
   [caption] {
@@ -17,6 +20,9 @@
     justify-content: space-between;
     transition: opacity 0.2s ease-in-out;
     padding: 1em;
+    h1 {
+      cursor: pointer;
+    }
   }
 
   [controls] {

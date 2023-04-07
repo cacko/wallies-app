@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
     public dialog: MatDialog,
     public user: UserService,
     private auth: Auth,
-    private router: Router,
+    public router: Router,
     public platform: Platform,
     private api: ApiService,
     private activatedRoute: ActivatedRoute
