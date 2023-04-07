@@ -1,8 +1,10 @@
 import { Component, Inject } from '@angular/core';
-import { snakeCase } from 'lodash-es';
+import { snakeCase, uniqueId } from 'lodash-es';
 import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { WallEntity } from 'src/app/entity/api.entity';
+import { saveAs } from 'file-saver';
+import { faker } from '@faker-js/faker';
 
 @Component({
   selector: 'app-image-zoom',
@@ -19,8 +21,9 @@ export class ImageZoomComponent {
     public data: WallEntity
   ) {}
 
-  get imageFilename(): string | null {
-    return `${snakeCase(this.data.title)}}.png`;
+  get imageFilename(): string {
+    const rand = faker.random.words(3);
+    return `${snakeCase(rand)}_${uniqueId()}.png`;
   }
 
   onClipboard() {
@@ -29,29 +32,7 @@ export class ImageZoomComponent {
 
   downloadImage() {
     this.buttonDisabled = true;
-    const canvas = document.createElement('canvas');
-    const image = new Image();
-    image.setAttribute('crossorigin', 'anonymous');
-    image.src = this.data.raw_src;
-    image.addEventListener('load', () => {
-      canvas.width = image.naturalWidth;
-      canvas.height = image.naturalHeight;
-      canvas.getContext('2d')?.drawImage(image, 0, 0);
-      const dataURL = canvas.toDataURL('image/png');
-      // const zeroth = {
-      //   [piexif.ImageIFD.ImageDescription]: deburr(this.data.caption || ''),
-      // };
-      // const exifObj = { '0th': zeroth };
-      // const exifbytes = piexif.dump(exifObj);
-      // const dataURLWithExif = piexif.insert(exifbytes, dataURL);
-
-      const link = document.createElement('a');
-      link.download = this.imageFilename || '';
-      link.href = dataURL;
-      link.setAttribute('target', '_blank');
-      link.click();
-      link.remove();
-      this.buttonDisabled = false;
-    });
+    saveAs(this.data.raw_src, this.imageFilename);
+    this.buttonDisabled = false;
   }
 }
