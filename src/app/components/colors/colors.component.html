@@ -1,1 +1,6 @@
-<p>colors works!</p>
+<mat-chip-listbox multiple aria-label="Colors selection" (change)="onChange($event)">
+  <mat-chip-option *ngFor="let color of items" [ngStyle]="getStyle(color)" [value]="color"
+    [selected]="selectedColors.includes(color)">
+    <span *ngIf="!selectedColors.includes(color)">&nbsp;</span>
+  </mat-chip-option>
+</mat-chip-listbox>

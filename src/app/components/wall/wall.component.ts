@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { WallCategory, WallEntity } from 'src/app/entity/api.entity';
-import { isEmpty, isString, orderBy } from 'lodash-es';
+import { chunk, isEmpty, isString, orderBy } from 'lodash-es';
 import { ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { of } from 'rxjs';
 import { NgxFlexMasonryGridComponent } from '@offensichtbar-codestock/ngx-flex-masonry-grid';
+import { distance, distanceFrom } from 'src/app/entity/colors';
 
 interface RouteDataEntity {
   data?: WallEntity[];
@@ -12,6 +13,7 @@ interface RouteDataEntity {
 
 interface RouteFilter {
   c?: string[];
+  h?: string[];
 }
 
 @Component({
@@ -25,6 +27,7 @@ export class WallComponent implements OnInit {
   photos: WallEntity[] = [];
   filter: RouteFilter = { c: [] };
   loading = true;
+  colors = '';
   @ViewChild(NgxFlexMasonryGridComponent) masonry?: NgxFlexMasonryGridComponent;
   constructor(private activatedRoute: ActivatedRoute) {}
 
@@ -41,8 +44,19 @@ export class WallComponent implements OnInit {
           data.data as WallEntity[],
           ['last_modified'],
           ['desc']
-        );
+        ).filter((w) => !w.deleted);
         this.items = photos;
+        this.colors = photos
+          .map((p) => p.colors)
+          .reduce((res: string[], clrs: string) => {
+            for (const clr of clrs.split(',')) {
+              if (distanceFrom(res, clr) > 70) {
+                res.push(clr);
+              }
+            }
+            return res;
+          }, [])
+          .join(',');
         this.doFilter();
       },
     });
@@ -53,7 +67,15 @@ export class WallComponent implements OnInit {
       const categories = isEmpty(this.filter?.c)
         ? Object.values(WallCategory).filter(isString)
         : this.filter.c;
-      this.photos = this.items.filter((p) => categories?.includes(p.category));
+      const colors = this.filter?.h || [];
+      this.photos = this.items.filter(
+        (p) =>
+          categories?.includes(p.category) &&
+          (!colors.length ||
+            Math.min(
+              ...p.colors.split(',').map((pc) => distanceFrom(colors, pc))
+            ) < 40)
+      );
       this.updateLayout();
     }
   }

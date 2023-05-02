@@ -2,23 +2,21 @@ export enum ApiConfig {
   BASE_URI = 'https://wallies.cacko.net/api',
 }
 
-
 export enum ApiType {
-  ARTWORKS = "artworks",
-  ARTWORK = "artwork"
+  ARTWORKS = 'artworks',
+  ARTWORK = 'artwork',
 }
 
 export enum WallCategory {
-  MINIMAL = "minimal",
-  ABSTRACT = "abstract",
-  MOVIES = "movies",
-  SPORT = "sport",
-  GAMES = "games",
-  CARTOON = "cartoon",
-  FANTASY = "fantasy",
-  NATURE = "nature"
+  MINIMAL = 'minimal',
+  ABSTRACT = 'abstract',
+  MOVIES = 'movies',
+  SPORT = 'sport',
+  GAMES = 'games',
+  CARTOON = 'cartoon',
+  FANTASY = 'fantasy',
+  NATURE = 'nature',
 }
-
 
 export interface WallEntity {
   id: string;
@@ -29,9 +27,9 @@ export interface WallEntity {
   category: WallCategory;
   colors: string;
   last_modified: number;
+  deleted?: boolean;
   filtered?: boolean;
 }
-
 
 export enum WSLoading {
   BLOCKING_ON = 'blocking_on',

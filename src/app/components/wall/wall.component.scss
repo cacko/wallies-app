@@ -6,6 +6,7 @@
   [grid] {
     display: grid;
     grid-auto-flow: dense;
+
     @media screen and (min-width: 450px) {
       grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
 
@@ -15,6 +16,21 @@
       &[filtered] {
         display: none;
       }
+    }
+  }
+
+  [colors] {
+    position: fixed;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    transition: all 300ms ease-in-out;
+    opacity: 0.3;
+
+    &:hover {
+      opacity: 1;
     }
   }
 }

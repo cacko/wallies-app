@@ -32,6 +32,7 @@ export class AppComponent implements OnInit {
   updating = false;
   connected = false;
   selectedCategories: string[] = [];
+  selectedColors: string[] = [];
 
   constructor(
     private swUpdate: SwUpdate,
@@ -74,20 +75,14 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.user.user.subscribe((user) => {
       this.api.hideLoader();
-      // if (user) {
-      //   this.ws.USER = user;
-      //   this.ws.connect();
-      // } else {
-      //   this.ws.disconnect();
-      // }
     });
     this.activatedRoute.fragment.subscribe({
       next: (data: any) => {
         try {
           const filter = JSON.parse(data);
           this.selectedCategories = filter?.c || [];
-        } catch (err) {
-        }
+          this.selectedColors = filter?.h || [];
+        } catch (err) {}
       },
     });
   }
@@ -103,7 +98,20 @@ export class AppComponent implements OnInit {
   onCategoryChange(selected: string[]) {
     this.selectedCategories = selected;
     this.router.navigate([''], {
-      fragment: JSON.stringify({c: this.selectedCategories})
+      fragment: JSON.stringify({
+        c: this.selectedCategories,
+        h: this.selectedColors,
+      }),
+    });
+  }
+
+  onColorChange(selected: string[]) {
+    this.selectedColors = selected;
+    this.router.navigate([''], {
+      fragment: JSON.stringify({
+        c: this.selectedCategories,
+        h: this.selectedColors,
+      }),
     });
   }
 }

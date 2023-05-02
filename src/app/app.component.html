@@ -9,7 +9,7 @@
   <div actions *ngIf="user.user | async as appUser">
     <button mat-icon-button [matMenuTriggerFor]="catmenu">
       <mat-icon [matBadge]="selectedCategories.length" matBadgeColor="warn"
-        [matBadgeHidden]="selectedCategories.length == 0">category</mat-icon>
+        [matBadgeHidden]="selectedCategories.length == 0" fontIcon="category"></mat-icon>
     </button>
     <mat-menu #catmenu="matMenu">
       <app-categories [selected]="selectedCategories" (change)="onCategoryChange($event)"
