@@ -10,6 +10,7 @@ import { slice, some } from 'lodash-es';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from './service/api.service';
 import { WSLoading } from './entity/api.entity';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 enum SearchOriginator {
   BUTTON = 1,

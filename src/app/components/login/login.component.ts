@@ -28,6 +28,12 @@ export class LoginComponent {
         });
     }
   }
+  login_anon() {
+    this.api.showLoader();
+    this.auth.signInAnonymously().then(() => {
+      this.router.navigate(['']);
+    });
+  }
   logout() {
     this.auth.signOut();
   }

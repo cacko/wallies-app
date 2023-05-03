@@ -11,9 +11,15 @@
   <p>You have to login with your google account, if you do not like it, piss off.</p>
   <div buttons>
     <div>
-      <button mat-flat-button color="primary" (click)="login_google()">
+      <button mat-flat-button color="accent" (click)="login_google()">
           <mat-icon>login</mat-icon>
           Login with Google
+        </button>
+    </div>
+    <div>
+      <button mat-flat-button color="primary" (click)="login_anon()">
+          <mat-icon>accessibility_new</mat-icon>
+          Login as Guest
         </button>
     </div>
   </div>
