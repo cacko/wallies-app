@@ -40,4 +40,8 @@ export class ImageZoomComponent {
     this.dialogRef.close();
     this.router.navigate(['/v', this.data.id]);
   }
+
+  onColors(colors: string[]) {
+    this.dialogRef.close();
+  }
 }

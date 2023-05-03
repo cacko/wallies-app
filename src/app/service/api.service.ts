@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject, tap } from 'rxjs';
+import { Observable, Subject, findIndex, tap } from 'rxjs';
 import { ApiConfig, ApiType, WSLoading } from '../entity/api.entity';
 import {
   HttpClient,
@@ -21,6 +21,7 @@ import {
   filter,
   map,
   isUndefined,
+  isNumber,
 } from 'lodash-es';
 import * as md5 from 'md5';
 
@@ -93,6 +94,14 @@ export class ApiService implements HttpInterceptor {
             if (isArray(data)) {
               const cachedIds = map(cached, 'id');
               cached.push(...filter(data, (d) => !cachedIds.includes(d.id)));
+              data
+                .filter((d) => cachedIds.includes(d.id))
+                .forEach((d) => {
+                  const idx = findIndex(cached, { id: d.id });
+                  if (isNumber(idx)) {
+                    cached[idx] = Object.assign(cached[idx], d);
+                  }
+                });
             } else if (isObject(data)) {
               cached.push(data);
             } else {
@@ -102,7 +111,7 @@ export class ApiService implements HttpInterceptor {
               cacheKey,
               JSON.stringify({ data: cached, timestamp: moment() })
             );
-            subscriber.next(cached);
+            subscriber.next(cached.filter((c: any) => !c.deleted));
           },
           error: (error: any) => console.debug(error),
         });

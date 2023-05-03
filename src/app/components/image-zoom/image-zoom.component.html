@@ -4,7 +4,7 @@
   <h3 class="subtitle">{{data.category}}</h3>
 </div>
 <div controls>
-  <app-colors [colors]="data.colors">
+  <app-colors [colors]="data.colors" (selected)="onColors($event)">
 
   </app-colors>
   <button mat-icon-button (click)="downloadImage()" [disabled]="buttonDisabled" matTooltip="download">

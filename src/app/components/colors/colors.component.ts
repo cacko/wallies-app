@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatChipListboxChange } from '@angular/material/chips';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -9,10 +9,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ColorsComponent implements OnInit {
   @Input() colors: string = '';
+  @Output() selected = new EventEmitter<string[]>();
 
   items: string[] = [];
   selectedCategories: string[] = [];
   selectedColors: string[] = [];
+  customColors: string[] = [];
 
   constructor(private route: ActivatedRoute, private router: Router) {}
 
@@ -23,6 +25,16 @@ export class ColorsComponent implements OnInit {
           const filter = JSON.parse(data);
           this.selectedCategories = filter?.c || [];
           this.selectedColors = filter?.h || [];
+          this.selectedColors
+            .filter((sc) => !this.items.includes(sc))
+            .forEach((sc) => this.customColors.push(sc) && this.items.push(sc));
+          this.customColors
+            .filter((cc) => !this.selectedColors.includes(cc))
+            .forEach(
+              (cc) =>
+                this.items.splice(this.items.indexOf(cc), 1) &&
+                this.customColors.splice(this.customColors.indexOf(cc), 1)
+            );
         } catch (err) {}
       },
     });
@@ -37,6 +49,7 @@ export class ColorsComponent implements OnInit {
 
   onChange(ev: MatChipListboxChange) {
     this.selectedColors = ev.value;
+    this.selected.emit(this.selectedColors);
     this.router.navigate([''], {
       fragment: JSON.stringify({
         c: this.selectedCategories,

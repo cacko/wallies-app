@@ -6,6 +6,7 @@ import { ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { of } from 'rxjs';
 import { NgxFlexMasonryGridComponent } from '@offensichtbar-codestock/ngx-flex-masonry-grid';
 import { distance, distanceFrom } from 'src/app/entity/colors';
+import { ColorComparison, parseColor } from '@baggie/color';
 
 interface RouteDataEntity {
   data?: WallEntity[];
@@ -44,13 +45,13 @@ export class WallComponent implements OnInit {
           data.data as WallEntity[],
           ['last_modified'],
           ['desc']
-        ).filter((w) => !w.deleted);
+        );
         this.items = photos;
         this.colors = photos
           .map((p) => p.colors)
           .reduce((res: string[], clrs: string) => {
             for (const clr of clrs.split(',')) {
-              if (distanceFrom(res, clr) > 70) {
+              if (distanceFrom(res, clr) > 100) {
                 res.push(clr);
               }
             }

@@ -22,7 +22,7 @@ export class ImageComponent implements OnInit {
   ngOnInit(): void {
     const img = new Image();
     img.src = this.data.webp_src;
-    fromEvent(img, 'load').subscribe(_ => this.layout.emit(true));
+    fromEvent(img, 'load').subscribe((_) => this.layout.emit(true));
     // this.src = this.data.content;
     // this.contentType = this.data.contentType || 'image/webp';
     this.caption = this.data.title || '';
@@ -39,7 +39,5 @@ export class ImageComponent implements OnInit {
       autoFocus: 'dialog',
       data: this.data,
     });
-
-    dialogRef.closed.subscribe((result) => {});
   }
 }
