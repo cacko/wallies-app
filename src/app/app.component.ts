@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from './service/api.service';
 import { WSLoading } from './entity/api.entity';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { ColorsObserver } from './entity/colors';
 
 enum SearchOriginator {
   BUTTON = 1,
@@ -34,6 +35,7 @@ export class AppComponent implements OnInit {
   connected = false;
   selectedCategories: string[] = [];
   selectedColors: string[] = [];
+  colors = '';
 
   constructor(
     private swUpdate: SwUpdate,
@@ -76,6 +78,11 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.user.user.subscribe((user) => {
       this.api.hideLoader();
+    });
+    ColorsObserver.subscribe({
+      next: (colors: string) => {
+        this.colors = colors;
+      }
     });
     this.activatedRoute.fragment.subscribe({
       next: (data: any) => {

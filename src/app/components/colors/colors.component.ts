@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { MatChipListboxChange } from '@angular/material/chips';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -9,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ColorsComponent implements OnInit {
   @Input() colors: string = '';
+  @Input() vertical: boolean = false;
   @Output() selected = new EventEmitter<string[]>();
 
   items: string[] = [];
@@ -47,7 +49,7 @@ export class ColorsComponent implements OnInit {
     };
   }
 
-  onChange(ev: MatChipListboxChange) {
+  onChange(ev: MatButtonToggleChange) {
     this.selectedColors = ev.value;
     this.selected.emit(this.selectedColors);
     this.router.navigate([''], {

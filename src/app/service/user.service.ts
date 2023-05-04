@@ -13,7 +13,6 @@ export class UserService {
     api: ApiService
   ) {
     onAuthStateChanged(auth, (user: User | null) => {
-      console.log(user);
       if (!user) {
         this.userSubject.next(null);
         api.hideLoader();

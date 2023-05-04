@@ -1,3 +1,21 @@
-mat-chip-option {
-  border: 2px solid #fff;
+mat-button-toggle-group {
+  border: none;
+
+  mat-button-toggle {
+    background-color: transparent;
+    &.mat-button-toggle-checked {
+      [value] {
+        border: 2px solid #fff;
+      }
+
+    }
+    [value] {
+      height: 1.5em;
+      display: inline-block;
+      width: 1.5em;
+      border-radius: 1em;
+    }
+
+  }
+
 }

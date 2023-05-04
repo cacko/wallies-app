@@ -5,7 +5,6 @@
 </div>
 <div controls>
   <app-colors [colors]="data.colors" (selected)="onColors($event)">
-
   </app-colors>
   <button mat-icon-button (click)="downloadImage()" [disabled]="buttonDisabled" matTooltip="download">
     <mat-icon [attr.hide]="buttonDisabled?'1':null">download</mat-icon>

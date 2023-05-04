@@ -55,6 +55,7 @@ import { ColorsComponent } from './components/colors/colors.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatBadgeModule } from '@angular/material/badge';
 import { ViewComponent } from './components/view/view.component';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 const MaterialModules = [
   MatInputModule,
@@ -83,6 +84,7 @@ const MaterialModules = [
   MatProgressSpinnerModule,
   MatChipsModule,
   MatBadgeModule,
+  MatButtonToggleModule
 ];
 
 @NgModule({

@@ -31,27 +31,6 @@
         transform: rotate(180deg);
         padding: 16px 0px;
       }
-
-    }
-
-    [navigator] {
-      display: flex;
-      align-items: center;
-      flex: 1;
-
-      button {
-        visibility: hidden;
-        opacity: 0;
-        transition: all 300ms ease-in-out;
-      }
-
-      &:hover {
-        button {
-          opacity: 1;
-          visibility: visible;
-        }
-
-      }
     }
   }
 
