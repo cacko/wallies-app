@@ -32,6 +32,15 @@
         padding: 16px 0px;
       }
     }
+
+    @media screen and (max-width: 449px) {
+      app-colors {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+
+      }
+    }
   }
 
 

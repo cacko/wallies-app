@@ -4,8 +4,8 @@
   <h3 class="subtitle">{{data.category}}</h3>
 </div>
 <div controls>
-  <app-colors [colors]="data.colors" (selected)="onColors($event)">
-  </app-colors>
+  <!-- <app-colors [colors]="data.colors" (selected)="onColors($event)">
+  </app-colors> -->
   <button mat-icon-button (click)="downloadImage()" [disabled]="buttonDisabled" matTooltip="download">
     <mat-icon [attr.hide]="buttonDisabled?'1':null">download</mat-icon>
     <mat-progress-spinner color="warn" mode="indeterminate" [diameter]="buttonDisabled?24:0"></mat-progress-spinner>
