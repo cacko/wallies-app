@@ -10,7 +10,7 @@ export enum ApiType {
 export enum WallCategory {
   MINIMAL = 'minimal',
   ABSTRACT = 'abstract',
-  MOVIES = 'movies',
+  LANDSCAPE = 'landscape',
   SPORT = 'sport',
   GAMES = 'games',
   CARTOON = 'cartoon',

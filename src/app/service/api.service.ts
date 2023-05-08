@@ -78,7 +78,7 @@ export class ApiService implements HttpInterceptor {
     return new Observable((subscriber: any) => {
       let id = query;
 
-      const cacheKey = this.cacheKey(type, id);
+      const cacheKey = this.cacheKey(type);
       const cached = this.inCache(cacheKey) || [];
       if (cached.length) {
         params['last_modified'] = head(
@@ -99,7 +99,7 @@ export class ApiService implements HttpInterceptor {
                 .forEach((d) => {
                   const idx = findIndex(cached, { id: d.id });
                   if (isNumber(idx)) {
-                    cached[idx] = Object.assign(cached[idx], d);
+                    cached[idx] = d;
                   }
                 });
             } else if (isObject(data)) {
@@ -118,8 +118,8 @@ export class ApiService implements HttpInterceptor {
     });
   }
 
-  private cacheKey(type: ApiType, id: string): string {
-    return md5(`${type}-${id}`);
+  private cacheKey(type: ApiType): string {
+    return md5(`${type}`);
   }
 
   private inCache(key: string): any {
