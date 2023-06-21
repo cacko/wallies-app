@@ -15,8 +15,6 @@ export class ImageComponent implements OnInit {
   caption: string = '';
 
   @Output() layout = new EventEmitter<boolean>();
-  @Output() pendingDelete = new EventEmitter<boolean>();
-
   constructor(public dialog: Dialog) {}
 
   ngOnInit(): void {

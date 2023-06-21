@@ -16,17 +16,14 @@ export class LoginComponent {
   ) {}
   login_google() {
     this.api.showLoader();
-    if (window.location.hostname == 'localhost') {
-      this.auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
-    } else {
-      this.auth
-        .signInWithPopup(new firebase.auth.GoogleAuthProvider())
-        .then((res) => {
-          if (res) {
-            this.router.navigate(['']);
-          }
-        });
-    }
+
+    this.auth
+      .signInWithPopup(new firebase.auth.GoogleAuthProvider())
+      .then((res) => {
+        if (res) {
+          this.router.navigate(['']);
+        }
+      });
   }
   login_anon() {
     this.api.showLoader();

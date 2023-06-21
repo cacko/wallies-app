@@ -1,23 +1,28 @@
 :host {
   height: 100vh;
+  width: 109%;
   overflow: hidden;
   overflow-y: auto;
 
-  [grid] {
-    display: grid;
-    grid-auto-flow: dense;
 
-    @media screen and (min-width: 450px) {
-      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    [grid] {
+      display: grid;
+      grid-auto-flow: dense;
+      grid-template-rows: masonry;
 
-    }
+      @media screen and (min-width: 450px) {
+        grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
 
-    [grid-item] {
-      &[filtered] {
-        display: none;
+      }
+
+      [grid-item] {
+        &[filtered] {
+          display: none;
+        }
       }
     }
-  }
+
+
 
   [colors] {
     position: fixed;

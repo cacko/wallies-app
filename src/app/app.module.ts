@@ -48,14 +48,14 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { WallComponent } from './components/wall/wall.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { NgxFlexMasonryGridModule } from '@offensichtbar-codestock/ngx-flex-masonry-grid';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { ColorsComponent } from './components/colors/colors.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatBadgeModule } from '@angular/material/badge';
 import { ViewComponent } from './components/view/view.component';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 const MaterialModules = [
   MatInputModule,
@@ -84,7 +84,7 @@ const MaterialModules = [
   MatProgressSpinnerModule,
   MatChipsModule,
   MatBadgeModule,
-  MatButtonToggleModule
+  MatButtonToggleModule,
 ];
 
 @NgModule({
@@ -114,8 +114,8 @@ const MaterialModules = [
     SafePipeModule,
     MomentModule,
     HttpClientModule,
-    NgxFlexMasonryGridModule,
     LazyLoadImageModule,
+    NgxSpinnerModule,
     ...MaterialModules,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),

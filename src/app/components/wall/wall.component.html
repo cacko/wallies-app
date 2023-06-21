@@ -1,8 +1,9 @@
-<osb-ngx-flexmasonry-grid grid (layoutComplete)="layoutComplete($event)" (itemRemoved)="itemRemoved($event)"
-  (itemLoaded)="itemLoaded($event)" (itemsLoaded)="itemsLoaded($event)">
-  <osb-ngx-flexmasonry-grid-item grid-item *ngFor="let photo of getPhotos() | async"
-    [attr.filtered]="photo.filtered?'1':null">
-    <app-image item [data]="photo" (pendingDelete)="onDelete(photo, $event)">
-    </app-image>
-  </osb-ngx-flexmasonry-grid-item>
-</osb-ngx-flexmasonry-grid>
+<!-- <cdk-virtual-scroll-viewport class="viewport" (scrolledIndexChange)="onScrollChange"> -->
+  <div grid>
+    <div grid-item *ngFor="let photo of photos"
+      [attr.filtered]="photo.filtered?'1':null">
+      <app-image item [data]="photo">
+      </app-image>
+    </div>
+  </div>
+<!-- </cdk-virtual-scroll-viewport> -->
