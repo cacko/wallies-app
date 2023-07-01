@@ -47,6 +47,7 @@ export class WallComponent implements OnInit {
     this.activatedRoute.fragment.subscribe({
       next: (data: any) => {
         this.filter = JSON.parse(data);
+        console.log(this.filter);
         this.doFilter();
       },
     });
@@ -92,6 +93,10 @@ export class WallComponent implements OnInit {
       ));
       this.updateLayout();
     }
+  }
+
+  getPhotos() {
+    return of(this.photos);
   }
 
   updateLayout() {

@@ -32,6 +32,7 @@ export class ViewComponent implements OnInit {
           raw_src: '',
           web_uri: '',
           webp_src: '',
+          thumb_src: '',
           category: WallCategory.ABSTRACT,
           colors: '',
           last_modified: 0,

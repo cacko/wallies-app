@@ -1,7 +1,9 @@
 :host {
 
   @supports (grid-template-rows: masonry) {
-    /* masonry code here */
+    ngx-spinner {
+      display: none;
+    }
   }
 
   mat-toolbar {

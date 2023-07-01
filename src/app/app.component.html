@@ -1,8 +1,10 @@
 <app-loader *ngIf="loading"></app-loader>
-<ngx-spinner type="square-jelly-box"></ngx-spinner>
+<ngx-spinner type="square-jelly-box" (click)="hideSpinner()">
+  <h1>Install Firefox</h1>
+</ngx-spinner>
 <mat-toolbar color="primary">
   <div title routerLink="/">wallies</div>
-  <app-colors [colors]="colors" [vertical]="true" *ngIf="colors.length"></app-colors>
+  <app-colors [colors]="colors" [vertical]="true" *ngIf="colors.length > 0"></app-colors>
   <div actions *ngIf="user.user | async as appUser">
     <button mat-icon-button [matMenuTriggerFor]="catmenu">
       <mat-icon [matBadge]="selectedCategories.length" matBadgeColor="warn"

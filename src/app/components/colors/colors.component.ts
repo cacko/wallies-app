@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./colors.component.scss'],
 })
 export class ColorsComponent implements OnInit {
-  @Input() colors: string = '';
+  @Input() colors: string|null = '';
   @Input() vertical: boolean = false;
   @Output() selected = new EventEmitter<string[]>();
 
@@ -40,7 +40,7 @@ export class ColorsComponent implements OnInit {
         } catch (err) {}
       },
     });
-    this.items = this.colors.split(',').map((c) => c.trim());
+    this.items = (this.colors || '').split(',').map((c) => c.trim());
   }
 
   getStyle(color: string) {

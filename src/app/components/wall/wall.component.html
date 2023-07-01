@@ -1,6 +1,6 @@
 <!-- <cdk-virtual-scroll-viewport class="viewport" (scrolledIndexChange)="onScrollChange"> -->
   <div grid>
-    <div grid-item *ngFor="let photo of photos"
+    <div grid-item *ngFor="let photo of getPhotos() | async"
       [attr.filtered]="photo.filtered?'1':null">
       <app-image item [data]="photo">
       </app-image>

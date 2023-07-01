@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentChecked, Component, OnInit } from '@angular/core';
 import { SwUpdate, VersionEvent } from '@angular/service-worker';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { interval } from 'rxjs';
+import { Subject, interval } from 'rxjs';
 import { UserService } from './service/user.service';
 import { Auth } from '@angular/fire/auth';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,6 +12,7 @@ import { ApiService } from './service/api.service';
 import { WSLoading } from './entity/api.entity';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ColorsObserver } from './entity/colors';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 enum SearchOriginator {
   BUTTON = 1,
@@ -29,7 +30,7 @@ const SEARCH_STATES = ['search', 'search_off'];
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterContentChecked {
   loading = true;
   updating = false;
   connected = false;
@@ -46,7 +47,8 @@ export class AppComponent implements OnInit {
     public router: Router,
     public platform: Platform,
     private api: ApiService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private spinner : NgxSpinnerService
   ) {
     this.api.showLoader();
     if (this.swUpdate.isEnabled) {
@@ -74,8 +76,17 @@ export class AppComponent implements OnInit {
       });
     });
   }
+  ngAfterContentChecked(): void {
+
+  }
+
+  hideSpinner() {
+    this.spinner.hide();
+  }
 
   ngOnInit(): void {
+    this.colors = '';
+    this.spinner.show()
     this.user.user.subscribe((user) => {
       this.api.hideLoader();
     });

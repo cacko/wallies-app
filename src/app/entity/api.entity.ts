@@ -24,6 +24,7 @@ export interface WallEntity {
   raw_src: string;
   web_uri: string;
   webp_src: string;
+  thumb_src: string;
   category: WallCategory;
   colors: string;
   last_modified: number;
