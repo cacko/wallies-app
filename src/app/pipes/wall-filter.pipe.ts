@@ -9,14 +9,11 @@ import { isEmpty, isString } from 'lodash-es';
 })
 export class WallFilterPipe implements PipeTransform {
   transform(items: WallEntity[], filter: RouteFilter): WallEntity[] {
-    console.log('pipe', filter, items);
-
     if (items.length > 0) {
       const categories = isEmpty(filter?.c)
         ? Object.values(WallCategory).filter(isString)
         : filter.c;
       const colors = filter?.h || [];
-      console.log(categories, colors);
       return items.filter(
         (p) =>
           categories?.includes(p.category) &&
