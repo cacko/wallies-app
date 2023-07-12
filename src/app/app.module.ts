@@ -56,6 +56,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { ViewComponent } from './components/view/view.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { WallFilterPipe } from './pipes/wall-filter.pipe';
 
 const MaterialModules = [
   MatInputModule,
@@ -99,6 +100,7 @@ const MaterialModules = [
     CategoriesComponent,
     ColorsComponent,
     ViewComponent,
+    WallFilterPipe,
   ],
   imports: [
     BrowserModule,

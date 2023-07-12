@@ -1,18 +1,16 @@
-import { AfterContentChecked, Component, OnInit } from '@angular/core';
+import { AfterContentChecked, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { SwUpdate, VersionEvent } from '@angular/service-worker';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Subject, interval } from 'rxjs';
+import { Observable, Subject, interval } from 'rxjs';
 import { UserService } from './service/user.service';
 import { Auth } from '@angular/fire/auth';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Platform } from '@angular/cdk/platform';
-import { slice, some } from 'lodash-es';
+import { some } from 'lodash-es';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from './service/api.service';
 import { WSLoading } from './entity/api.entity';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { ColorsObserver } from './entity/colors';
-import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import {  NgxSpinnerService } from 'ngx-spinner';
 
 enum SearchOriginator {
   BUTTON = 1,
@@ -30,7 +28,7 @@ const SEARCH_STATES = ['search', 'search_off'];
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, AfterContentChecked {
+export class AppComponent implements OnInit {
   loading = true;
   updating = false;
   connected = false;
@@ -75,9 +73,11 @@ export class AppComponent implements OnInit, AfterContentChecked {
           (this.loading = WSLoading.BLOCKING_ON === res);
       });
     });
-  }
-  ngAfterContentChecked(): void {
-
+    this.api.colors.subscribe({
+      next: (colors: string) => {
+        this.colors = colors;
+      }
+    });
   }
 
   hideSpinner() {
@@ -87,14 +87,10 @@ export class AppComponent implements OnInit, AfterContentChecked {
   ngOnInit(): void {
     this.colors = '';
     this.spinner.show()
-    this.user.user.subscribe((user) => {
+      this.user.user.subscribe((user) => {
       this.api.hideLoader();
     });
-    ColorsObserver.subscribe({
-      next: (colors: string) => {
-        this.colors = colors;
-      }
-    });
+
     this.activatedRoute.fragment.subscribe({
       next: (data: any) => {
         try {

@@ -17,6 +17,3 @@ export const distance = (c1: string, c2: string) => {
 export const distanceFrom = (colors: string[], c2: string) => {
   return Math.min(...colors.map((cl) => distance(cl, c2)));
 };
-
-export const ColorsSubject = new Subject<string>();
-export const ColorsObserver = ColorsSubject.asObservable();

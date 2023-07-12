@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { WallCategory, WallEntity } from 'src/app/entity/api.entity';
-import { chunk, isEmpty, isString, orderBy } from 'lodash-es';
-import { ChangeDetectionStrategy, ViewChild } from '@angular/core';
-import { of, Observable, Subject } from 'rxjs';
-import { ColorsSubject, distance, distanceFrom } from 'src/app/entity/colors';
-import { ColorComparison, parseColor } from '@baggie/color';
+import { WallEntity } from 'src/app/entity/api.entity';
+import {
+  orderBy,
+} from 'lodash-es';
+import { ChangeDetectionStrategy } from '@angular/core';
+import { distanceFrom } from 'src/app/entity/colors';
 import {
   FixedSizeVirtualScrollStrategy,
   VIRTUAL_SCROLL_STRATEGY,
 } from '@angular/cdk/scrolling';
+import { ApiService } from 'src/app/service/api.service';
 
 export class CustomVirtualScrollStrategy extends FixedSizeVirtualScrollStrategy {
   constructor() {
@@ -20,7 +25,7 @@ interface RouteDataEntity {
   data?: WallEntity[];
 }
 
-interface RouteFilter {
+export interface RouteFilter {
   c?: string[];
   h?: string[];
 }
@@ -29,26 +34,27 @@ interface RouteFilter {
   selector: 'app-wall',
   templateUrl: './wall.component.html',
   styleUrls: ['./wall.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
   providers: [
     { provide: VIRTUAL_SCROLL_STRATEGY, useClass: CustomVirtualScrollStrategy },
   ],
 })
 export class WallComponent implements OnInit {
+  @Input() filterBy: RouteFilter = { c: [] };
+
   items: WallEntity[] = [];
-  private subject = new Subject<WallEntity[]>();
-  photos: WallEntity[] = [];
-  filter: RouteFilter = { c: [] };
   loading = true;
   colors = '';
-  constructor(private activatedRoute: ActivatedRoute) {}
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private apiService: ApiService
+  ) {}
 
   ngOnInit() {
     this.activatedRoute.fragment.subscribe({
       next: (data: any) => {
-        this.filter = JSON.parse(data);
-        console.log(this.filter);
-        this.doFilter();
+        this.filterBy = JSON.parse(data);
       },
     });
     this.activatedRoute.data.subscribe({
@@ -59,49 +65,24 @@ export class WallComponent implements OnInit {
           ['desc']
         );
         this.items = photos;
-        ColorsSubject.next(
-          photos
-            .map((p) => p.colors)
-            .reduce((res: string[], clrs: string) => {
-              for (const clr of clrs.split(',')) {
-                if (distanceFrom(res, clr) > 100) {
-                  res.push(clr);
-                }
+        const colors = photos
+          .map((p) => p.colors)
+          .reduce((res: string[], clrs: string) => {
+            for (const clr of clrs.split(',')) {
+              if (distanceFrom(res, clr) > 100) {
+                res.push(clr);
               }
-              return res;
-            }, [])
-            .join(',')
-        );
-        this.doFilter();
+            }
+            return res;
+          }, [])
+          .join(',');
+        this.apiService.colorsSubject.next(colors);
       },
     });
   }
 
-  private doFilter() {
-    if (this.items.length > 0) {
-      const categories = isEmpty(this.filter?.c)
-        ? Object.values(WallCategory).filter(isString)
-        : this.filter.c;
-      const colors = this.filter?.h || [];
-      this.photos = (this.items.filter(
-        (p) =>
-          categories?.includes(p.category) &&
-          (!colors.length ||
-            Math.min(
-              ...p.colors.split(',').map((pc) => distanceFrom(colors, pc))
-            ) < 40)
-      ));
-      this.updateLayout();
-    }
-  }
-
-  getPhotos() {
-    return of(this.photos);
-  }
-
   updateLayout() {
-    setTimeout(() => {
-    });
+    setTimeout(() => {});
   }
 
   onScrollChange() {

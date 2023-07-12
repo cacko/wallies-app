@@ -36,6 +36,8 @@ interface CacheEntry {
 export class ApiService implements HttpInterceptor {
   private loaderSubject = new Subject<WSLoading>();
   loading = this.loaderSubject.asObservable();
+  colorsSubject = new Subject<string>();
+  colors = this.colorsSubject.asObservable();
   errorSubject = new Subject<string>();
   error = this.errorSubject.asObservable();
   constructor(private httpClient: HttpClient) {}

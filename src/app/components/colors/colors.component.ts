@@ -2,6 +2,7 @@
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { MatChipListboxChange } from '@angular/material/chips';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ApiService } from 'src/app/service/api.service';
 
 @Component({
   selector: 'app-colors',
@@ -9,7 +10,6 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./colors.component.scss'],
 })
 export class ColorsComponent implements OnInit {
-  @Input() colors: string|null = '';
   @Input() vertical: boolean = false;
   @Output() selected = new EventEmitter<string[]>();
 
@@ -17,8 +17,19 @@ export class ColorsComponent implements OnInit {
   selectedCategories: string[] = [];
   selectedColors: string[] = [];
   customColors: string[] = [];
+  colors: string|null = '';
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private api: ApiService
+  ) {
+    this.api.colors.subscribe({
+      next: (colors: string) => {
+        this.items = (colors || '').split(',').map((c) => c.trim());
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.route.fragment.subscribe({
