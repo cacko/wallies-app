@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject, findIndex, tap } from 'rxjs';
+import { Observable, Subject, findIndex, of, tap } from 'rxjs';
 import { ApiConfig, ApiType, WSLoading } from '../entity/api.entity';
 import {
   HttpClient,
   HttpErrorResponse,
   HttpEvent,
+  HttpEventType,
   HttpHandler,
   HttpInterceptor,
   HttpRequest,
@@ -40,7 +41,9 @@ export class ApiService implements HttpInterceptor {
   colors = this.colorsSubject.asObservable();
   errorSubject = new Subject<string>();
   error = this.errorSubject.asObservable();
-  constructor(private httpClient: HttpClient) {}
+  userToken = "";
+  constructor(private httpClient: HttpClient) { }
+
 
   intercept(
     req: HttpRequest<any>,
@@ -72,6 +75,37 @@ export class ApiService implements HttpInterceptor {
     this.loaderSubject.next(WSLoading.BLOCKING_OFF);
   }
 
+  // post(
+  //   type: ApiType,
+  //   body: FormData
+  // ): Observable<UploadResponse> {
+  //   const req = new HttpRequest("POST", `${ApiConfig.BASE_URI}/${type}`, {
+  //     body,
+  //     headers: { "X-User-Token": this.userToken },
+  //     reportProgress: true
+  //   });
+  //   return this.httpClient.request(req).pipe(
+  //     map((res: HttpEvent<any>) => {
+  //       switch (res.type) {
+  //         case HttpEventType.Response:
+  //           const responseFromBackend = res.body;
+  //           return {
+  //             body: responseFromBackend,
+  //             status: UploadStatus.UPLOADED
+  //           };
+  //         case HttpEventType.UploadProgress:
+  //           const uploadProgress = +Math.round((100 * res.loaded) / (res.total || 1));
+  //           return {
+  //             status: UploadStatus.IN_PROGRESS,
+  //             progress: uploadProgress
+  //           };
+  //         default:
+  //           return of({ status: UploadStatus.ERROR, progress: 0 });
+  //       }
+  //     })
+  //   );
+  // }
+
   fetch(
     type: ApiType,
     query: string = '',
@@ -87,8 +121,10 @@ export class ApiService implements HttpInterceptor {
           orderBy(cached, ['last_modified'], ['desc'])
         ).last_modified;
       }
+
       this.httpClient
         .get(`${ApiConfig.BASE_URI}/${type}/${id}`, {
+          headers: { "X-User-Token": this.userToken },
           params: omitBy(params, isUndefined),
         })
         .subscribe({

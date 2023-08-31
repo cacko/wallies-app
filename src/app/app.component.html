@@ -1,7 +1,4 @@
 <app-loader *ngIf="loading"></app-loader>
-<ngx-spinner type="square-jelly-box" (click)="hideSpinner()">
-  <h1>Install Firefox</h1>
-</ngx-spinner>
 <mat-toolbar color="primary">
   <div title routerLink="/">wallies</div>
   <app-colors [vertical]="true" (selected)="onColorChange($event)"></app-colors>

@@ -14,16 +14,20 @@ export class LoginComponent {
     private api: ApiService,
     private router: Router
   ) {}
+
+  private getProvider() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+    return provider;
+  }
+
   login_google() {
     this.api.showLoader();
-
-    this.auth
-      .signInWithPopup(new firebase.auth.GoogleAuthProvider())
-      .then((res) => {
-        if (res) {
-          this.router.navigate(['']);
-        }
-      });
+    this.auth.signInWithPopup(this.getProvider()).then((res) => {
+      if (res) {
+        this.router.navigate(['']);
+      }
+    });
   }
   login_anon() {
     this.api.showLoader();

@@ -2,25 +2,17 @@ import {
   Component,
   Input,
   OnInit,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { WallEntity } from 'src/app/entity/api.entity';
 import {
   orderBy,
 } from 'lodash-es';
-import { ChangeDetectionStrategy } from '@angular/core';
 import { distanceFrom } from 'src/app/entity/colors';
-import {
-  FixedSizeVirtualScrollStrategy,
-  VIRTUAL_SCROLL_STRATEGY,
-} from '@angular/cdk/scrolling';
 import { ApiService } from 'src/app/service/api.service';
+import { UserService } from 'src/app/service/user.service';
 
-export class CustomVirtualScrollStrategy extends FixedSizeVirtualScrollStrategy {
-  constructor() {
-    super(10, 20, 50);
-  }
-}
 interface RouteDataEntity {
   data?: WallEntity[];
 }
@@ -34,10 +26,7 @@ export interface RouteFilter {
   selector: 'app-wall',
   templateUrl: './wall.component.html',
   styleUrls: ['./wall.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Default,
-  providers: [
-    { provide: VIRTUAL_SCROLL_STRATEGY, useClass: CustomVirtualScrollStrategy },
-  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WallComponent implements OnInit {
   @Input() filterBy: RouteFilter = { c: [] };
@@ -48,7 +37,7 @@ export class WallComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private apiService: ApiService
+    private apiService: ApiService,
   ) {}
 
   ngOnInit() {

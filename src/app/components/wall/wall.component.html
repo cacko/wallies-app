@@ -1,8 +1,9 @@
-<!-- <cdk-virtual-scroll-viewport class="viewport" (scrolledIndexChange)="onScrollChange"> -->
+<cdk-virtual-scroll-viewport itemSize="100" minBufferPx="2000" maxBufferPx="4000" appendOnly="true" class="viewport" (scrolledIndexChange)="onScrollChange">
   <div grid>
-    <div grid-item *ngFor="let photo of items | wallFilter:filterBy">
+    <div grid-item *cdkVirtualFor="let photo of items | wallFilter:filterBy">
       <app-image item [data]="photo">
       </app-image>
     </div>
   </div>
-<!-- </cdk-virtual-scroll-viewport> -->
+
+</cdk-virtual-scroll-viewport>

@@ -11,6 +11,7 @@ export enum AvatarGender {
   UNKNOWN = "00,02,04,05,06,07,08,09,10,11,12,13,14,15"
 }
 
+export const Admins = ["alex@cacko.net"]
 
 export interface AppUserEntity {
   uid: string;

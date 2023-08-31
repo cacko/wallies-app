@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { WallEntity } from 'src/app/entity/api.entity';
 import { saveAs } from 'file-saver';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-image-zoom',
@@ -15,6 +16,7 @@ export class ImageZoomComponent {
   buttonDisabled = false;
 
   constructor(
+    public userService: UserService,
     public dialogRef: DialogRef<string>,
     private snackbar: MatSnackBar,
     private router: Router,
@@ -34,6 +36,10 @@ export class ImageZoomComponent {
     this.buttonDisabled = true;
     saveAs(this.data.raw_src, this.imageFilename);
     this.buttonDisabled = false;
+  }
+
+  deleteImage() {
+
   }
 
   goToView() {

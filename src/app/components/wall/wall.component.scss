@@ -1,28 +1,55 @@
 :host {
   height: 100vh;
-  width: 109%;
+  width: 100%;
   overflow: hidden;
   overflow-y: auto;
 
+  .viewport {
+    height: 100vh;
+    width: 100%;
+  }
 
-    [grid] {
+
+  [grid] {
+
+    @supports (grid-template-rows: masonry) {
       display: grid;
       grid-auto-flow: dense;
       grid-template-rows: masonry;
 
       @media screen and (min-width: 450px) {
         grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      }
+    }
 
+    @supports not (grid-template-rows: masonry) {
+      column-gap: 0;
+      column-count: 1;
+      width: 100vw;
+
+      @media screen and (min-width: 900px) {
+        column-count: 2;
+      }
+
+      @media screen and (min-width: 1200px) {
+        column-count: 3;
       }
 
       [grid-item] {
-        &[filtered] {
-          display: none;
-        }
+        margin: 0;
+        display: inline-block;
+        margin-bottom: 0px;
+        width: 100%;
       }
     }
 
 
+    [grid-item] {
+      &[filtered] {
+        display: none;
+      }
+    }
+  }
 
   [colors] {
     position: fixed;

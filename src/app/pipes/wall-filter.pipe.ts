@@ -19,8 +19,8 @@ export class WallFilterPipe implements PipeTransform {
           categories?.includes(p.category) &&
           (!colors.length ||
             Math.min(
-              ...p.colors.split(',').map((pc) => distanceFrom(colors, pc))
-            ) < 40)
+              ...p.colors.split(',').map((pc,idx) => distanceFrom(colors, pc))
+            ) < 30)
       );
     }
     return items;

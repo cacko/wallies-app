@@ -1,11 +1,5 @@
 :host {
 
-  @supports (grid-template-rows: masonry) {
-    ngx-spinner {
-      display: none;
-    }
-  }
-
   mat-toolbar {
     display: flex;
     justify-content: space-between;
