@@ -26,7 +26,7 @@ export interface RouteFilter {
   selector: 'app-wall',
   templateUrl: './wall.component.html',
   styleUrls: ['./wall.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class WallComponent implements OnInit {
   @Input() filterBy: RouteFilter = { c: [] };
