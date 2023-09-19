@@ -7,7 +7,10 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { WallEntity } from 'src/app/entity/api.entity';
 import {
+  flatten,
   orderBy,
+  uniq,
+  pull
 } from 'lodash-es';
 import { distanceFrom } from 'src/app/entity/colors';
 import { ApiService } from 'src/app/service/api.service';
@@ -54,11 +57,12 @@ export class WallComponent implements OnInit {
           ['desc']
         );
         this.items = photos;
+        const allColors = uniq(flatten(photos.map(p => p.colors.split(","))));
         const colors = photos
           .map((p) => p.colors)
           .reduce((res: string[], clrs: string) => {
             for (const clr of clrs.split(',')) {
-              if (distanceFrom(res, clr) > 100) {
+              if (distanceFrom(pull(allColors, clr), clr) > 60) {
                 res.push(clr);
               }
             }

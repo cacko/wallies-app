@@ -20,7 +20,7 @@ export class WallFilterPipe implements PipeTransform {
           (!colors.length ||
             Math.min(
               ...p.colors.split(',').map((pc,idx) => distanceFrom(colors, pc))
-            ) < 30)
+            ) < 60)
       );
     }
     return items;

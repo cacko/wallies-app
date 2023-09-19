@@ -15,7 +15,9 @@ $theme: mat.define-dark-theme((color: (primary: $theme-primary,
 @include mat.all-component-colors($theme);
 @include mat.all-component-typographies($theme);
 
-@import "./mixins.scss";
+
+@import "./scss/image-container";
+@import "./scss/image-zoom-panel";
 
 html {
   box-sizing: border-box;
@@ -51,16 +53,7 @@ body {
   }
 }
 
-.image-zoom-panel {
-  max-height: 95%;
-  height: auto;
-  padding: 0;
-  border-radius: 1em;
-  // img {
-  //   border: 0;
-  // }
-  @include lightbox;
-}
+
 
 .image-zoom-backdrop {
   background-color: rgba(0, 0, 0, 0.8);

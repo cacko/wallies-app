@@ -16,6 +16,7 @@ export enum WallCategory {
   CARTOON = 'cartoon',
   FANTASY = 'fantasy',
   NATURE = 'nature',
+  HORROR = 'horror'
 }
 
 export interface WallEntity {

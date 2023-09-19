@@ -1,0 +1,13 @@
+@import "mixins.scss";
+
+
+.image-zoom-panel {
+  max-height: 95%;
+  height: auto;
+  padding: 0;
+  border-radius: 1em;
+  // img {
+  //   border: 0;
+  // }
+  @include lightbox();
+}

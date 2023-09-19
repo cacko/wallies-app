@@ -30,18 +30,4 @@ position: relative;
       }
     }
   }
-
-  [image-container] {
-    background-position: center center;
-    background-size: cover;
-    flex: 1;
-
-    img {
-      width: 100%;
-    }
-
-    overflow-y: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
 }
