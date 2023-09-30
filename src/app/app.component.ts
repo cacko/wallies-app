@@ -4,13 +4,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, Subject, interval } from 'rxjs';
 import { UserService } from './service/user.service';
 import { Auth } from '@angular/fire/auth';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, OnSameUrlNavigation, Router, Event, EventType } from '@angular/router';
 import { Platform } from '@angular/cdk/platform';
 import { some } from 'lodash-es';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from './service/api.service';
 import { WSLoading } from './entity/api.entity';
-import {  NgxSpinnerService } from 'ngx-spinner';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 enum SearchOriginator {
   BUTTON = 1,
@@ -46,7 +46,7 @@ export class AppComponent implements OnInit {
     public platform: Platform,
     private api: ApiService,
     private activatedRoute: ActivatedRoute,
-    private spinner : NgxSpinnerService
+    private spinner: NgxSpinnerService
   ) {
     this.api.showLoader();
     if (this.swUpdate.isEnabled) {
@@ -86,12 +86,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.colors = '';
-    this.spinner.show()
+    this.spinner.show();
     this.user.user.subscribe((user) => {
       user?.getIdToken().then((res) => {
         this.api.userToken = res;
-        console.log(res)
-        ;
+        console.debug(res);
       });
       this.api.hideLoader();
     });
@@ -102,8 +101,21 @@ export class AppComponent implements OnInit {
           const filter = JSON.parse(data);
           this.selectedCategories = filter?.c || [];
           this.selectedColors = filter?.h || [];
-        } catch (err) {}
+        } catch (err) { }
       },
+    });
+
+    this.router.events.subscribe((ev: Event) => {
+      switch (ev.type) {
+        case EventType.NavigationStart:
+          return this.api.showLoader();
+
+        case EventType.NavigationEnd:
+        case EventType.NavigationCancel:
+        case EventType.NavigationError:
+        case EventType.NavigationSkipped:
+          return this.api.hideLoader();
+      };
     });
   }
 

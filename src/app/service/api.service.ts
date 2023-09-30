@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject, findIndex, of, tap } from 'rxjs';
+import { Observable, Subject, of, tap } from 'rxjs';
 import { ApiConfig, ApiType, WSLoading } from '../entity/api.entity';
 import {
   HttpClient,
@@ -18,11 +18,13 @@ import {
   orderBy,
   head,
   isObject,
+  findIndex,
   isArray,
   filter,
   map,
   isUndefined,
   isNumber,
+  find,
 } from 'lodash-es';
 import * as md5 from 'md5';
 
@@ -149,7 +151,12 @@ export class ApiService implements HttpInterceptor {
               cacheKey,
               JSON.stringify({ data: cached, timestamp: moment() })
             );
-            subscriber.next(cached.filter((c: any) => !c.deleted));
+            if (isArray(data)) {
+              subscriber.next(cached.filter((c: any) => !c.deleted));
+            } else {
+              const returnId = "id" in data ? data.id : "";
+              subscriber.next(find(cached, {id: returnId}));
+            }
           },
           error: (error: any) => console.debug(error),
         });

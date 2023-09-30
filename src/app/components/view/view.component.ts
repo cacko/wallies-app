@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { head, snakeCase } from 'lodash-es';
 import { WallCategory, WallEntity } from 'src/app/entity/api.entity';
 import { saveAs } from 'file-saver';
 
 interface RouteDataEntity {
-  data?: WallEntity[];
+  data?: WallEntity;
 }
 
 @Component({
@@ -20,23 +20,15 @@ export class ViewComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private snackbar: MatSnackBar
-  ) {}
+    private snackbar: MatSnackBar,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.activatedRoute.data.subscribe({
       next: (data: RouteDataEntity) => {
-        this.data = head(data.data) || {
-          title: '',
-          id: '',
-          raw_src: '',
-          web_uri: '',
-          webp_src: '',
-          thumb_src: '',
-          category: WallCategory.ABSTRACT,
-          colors: '',
-          last_modified: 0,
-        };
+        const item = data.data as WallEntity;
+        this.data = item;
       },
     });
   }
@@ -59,5 +51,10 @@ export class ViewComponent implements OnInit {
     this.buttonDisabled = true;
     saveAs(this.data.raw_src, this.imageFilename);
     this.buttonDisabled = false;
+  }
+
+  @HostListener('document:keydown.escape', ['$event'])
+  onEscape() {
+    this.router.navigateByUrl("/");
   }
 }

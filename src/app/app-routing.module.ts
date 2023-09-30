@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, ActivatedRouteSnapshot,RouterStateSnapshot  } from '@angular/router';
 import {
   AngularFireAuthGuard,
   redirectUnauthorizedTo,
@@ -11,8 +11,26 @@ import { artworksResolver } from './service/artworks.service';
 import { ViewComponent } from './components/view/view.component';
 import { artworkResolver } from './service/artwork.service';
 
-const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
-const redirectLoggedInToHome = () => redirectLoggedInTo(['w']);
+// const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
+// const redirectLoggedInToHome = () => redirectLoggedInTo(['w']);
+
+/** add redirect URL to login */
+const redirectUnauthorizedToLogin = (next: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+  return redirectUnauthorizedTo(`/login?redirectTo=${state.url}`);
+};
+
+/** Uses the redirectTo query parameter if available to redirect logged in users, or defaults to '/' */
+const redirectLoggedInToPreviousPage = (next: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+  let redirectUrl = '/';
+  try {
+    const redirectToUrl = new URL(state.url, location.origin);
+    const params = new URLSearchParams(redirectToUrl.search);
+    redirectUrl = params.get('redirectTo') || '/';
+  } catch (err) {
+    // invalid URL
+  }
+  return redirectLoggedInTo(redirectUrl);
+};
 
 const routes: Routes = [
   {
@@ -40,7 +58,7 @@ const routes: Routes = [
     component: LoginComponent,
     pathMatch: 'full',
     canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectLoggedInToHome },
+    data: { authGuardPipe: redirectLoggedInToPreviousPage },
   },
 ];
 

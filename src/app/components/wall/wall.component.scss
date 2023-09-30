@@ -20,6 +20,9 @@
       @media screen and (min-width: 450px) {
         grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
       }
+      @media screen and (min-width: 1850px) {
+        grid-template-columns: repeat(auto-fit, minmax(calc(100vw / 5), 1fr));
+      }
     }
 
     @supports not (grid-template-rows: masonry) {

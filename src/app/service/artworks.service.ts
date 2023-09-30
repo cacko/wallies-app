@@ -12,7 +12,7 @@ import { map } from 'rxjs';
 export class ArtworksService {
   constructor(private api: ApiService) {}
 
-  getArtwork(): any {
+  getArtworks(): any {
     return this.api.fetch(ApiType.ARTWORKS);
   }
 }
@@ -21,5 +21,5 @@ export const artworksResolver: ResolveFn<WallEntity[]> = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
 ) => {
-  return inject(ArtworksService).getArtwork();
+  return inject(ArtworksService).getArtworks();
 };
