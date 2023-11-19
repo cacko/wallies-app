@@ -4,7 +4,6 @@ import { ApiType, WallEntity } from '../entity/api.entity';
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { RouterStateSnapshot } from '@angular/router';
 import { ApiService } from './api.service';
-import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +12,7 @@ export class ArtworksService {
   constructor(private api: ApiService) {}
 
   getArtworks(): any {
-    return this.api.fetch(ApiType.ARTWORKS);
+    return this.api.fetch(ApiType.ARTWORKS, '', {limit: 20});
   }
 }
 

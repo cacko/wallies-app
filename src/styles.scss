@@ -18,6 +18,7 @@ $theme: mat.define-dark-theme((color: (primary: $theme-primary,
 
 @import "./scss/image-container";
 @import "./scss/image-zoom-panel";
+@import "./scss/app-privacy";
 
 html {
   box-sizing: border-box;

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject, of, tap } from 'rxjs';
+import { Observable, Subject, of, tap, expand, reduce, EMPTY } from 'rxjs';
 import { ApiConfig, ApiType, WSLoading } from '../entity/api.entity';
 import {
   HttpClient,
@@ -25,6 +25,8 @@ import {
   isUndefined,
   isNumber,
   find,
+  isArrayLike,
+  concat,
 } from 'lodash-es';
 import * as md5 from 'md5';
 
@@ -43,9 +45,8 @@ export class ApiService implements HttpInterceptor {
   colors = this.colorsSubject.asObservable();
   errorSubject = new Subject<string>();
   error = this.errorSubject.asObservable();
-  userToken = "";
-  constructor(private httpClient: HttpClient) { }
-
+  userToken = '';
+  constructor(private httpClient: HttpClient) {}
 
   intercept(
     req: HttpRequest<any>,
@@ -126,9 +127,25 @@ export class ApiService implements HttpInterceptor {
 
       this.httpClient
         .get(`${ApiConfig.BASE_URI}/${type}/${id}`, {
-          headers: { "X-User-Token": this.userToken },
+          headers: { 'X-User-Token': this.userToken },
           params: omitBy(params, isUndefined),
+          observe: 'response',
         })
+        .pipe(
+          expand((res) => {
+            const nextPage = res.headers.get('x-pagination-next');
+            return nextPage
+              ? this.httpClient.get(nextPage, {
+                  headers: { 'X-User-Token': this.userToken },
+                  observe: 'response',
+                })
+              : EMPTY;
+          }),
+          reduce((acc, current): any =>  {
+            const data = current.body || {};
+            return isArrayLike(data) ? concat(acc, data) : data;
+          }, [])
+        )
         .subscribe({
           next: (data: any) => {
             if (isArray(data)) {
@@ -154,8 +171,8 @@ export class ApiService implements HttpInterceptor {
             if (isArray(data)) {
               subscriber.next(cached.filter((c: any) => !c.deleted));
             } else {
-              const returnId = "id" in data ? data.id : "";
-              subscriber.next(find(cached, {id: returnId}));
+              const returnId = 'id' in data ? data.id : '';
+              subscriber.next(find(cached, { id: returnId }));
             }
           },
           error: (error: any) => console.debug(error),

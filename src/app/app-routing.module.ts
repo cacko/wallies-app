@@ -10,6 +10,7 @@ import { WallComponent } from './components/wall/wall.component';
 import { artworksResolver } from './service/artworks.service';
 import { ViewComponent } from './components/view/view.component';
 import { artworkResolver } from './service/artwork.service';
+import { PrivacyComponent } from './components/privacy/privacy.component';
 
 // const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 // const redirectLoggedInToHome = () => redirectLoggedInTo(['w']);
@@ -59,6 +60,11 @@ const routes: Routes = [
     pathMatch: 'full',
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: redirectLoggedInToPreviousPage },
+  },
+  {
+    path: 'privacy',
+    component: PrivacyComponent,
+    pathMatch: 'full',
   },
 ];
 

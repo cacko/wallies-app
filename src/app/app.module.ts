@@ -57,6 +57,7 @@ import { ViewComponent } from './components/view/view.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { WallFilterPipe } from './pipes/wall-filter.pipe';
+import { PrivacyComponent } from './components/privacy/privacy.component';
 
 const MaterialModules = [
   MatInputModule,
@@ -101,6 +102,7 @@ const MaterialModules = [
     ColorsComponent,
     ViewComponent,
     WallFilterPipe,
+    PrivacyComponent,
   ],
   imports: [
     BrowserModule,
