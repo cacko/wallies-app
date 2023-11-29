@@ -87,13 +87,13 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.colors = '';
     this.spinner.show();
-    this.user.user.subscribe((user) => {
-      user?.getIdToken().then((res) => {
-        this.api.userToken = res;
-        console.debug(res);
-      });
-      this.api.hideLoader();
-    });
+    // this.user.user.subscribe((user) => {
+    //   user?.getIdToken().then((res) => {
+    //     this.api.userToken = res;
+    //     console.debug(res);
+    //   });
+    //   this.api.hideLoader();
+    // });
 
     this.activatedRoute.fragment.subscribe({
       next: (data: any) => {

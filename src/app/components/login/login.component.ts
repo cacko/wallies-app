@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ActivatedRoute, Router } from '@angular/router';
-import firebase from 'firebase/compat/app';
 import { ApiService } from 'src/app/service/api.service';
+import { UserService } from 'src/app/service/user.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,8 +12,8 @@ export class LoginComponent implements OnInit {
   private redirectTo: string = "/";
 
   constructor(
-    public auth: AngularFireAuth,
     private api: ApiService,
+    public user: UserService,
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) { }
@@ -29,27 +28,23 @@ export class LoginComponent implements OnInit {
 
 
 
-  private getProvider() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    provider.setCustomParameters({ prompt: 'select_account' });
-    return provider;
+
+
+  async login_google() {
+    await this.user.googeLogin();
+    return await this.router.navigateByUrl(this.redirectTo);
+
   }
 
-  login_google() {
-    this.api.showLoader();
-    this.auth.signInWithPopup(this.getProvider()).then((res) => {
-      if (res) {
-        this.router.navigateByUrl(this.redirectTo);
-      }
-    });
+
+  async login_anon() {
+    await this.user.login_anon();
+    return await this.router.navigateByUrl(this.redirectTo);
+
   }
-  login_anon() {
-    this.api.showLoader();
-    this.auth.signInAnonymously().then(() => {
-      this.router.navigateByUrl(this.redirectTo);
-    });
-  }
-  logout() {
-    this.auth.signOut();
+
+
+  async logout() {
+    return await this.user.logout();
   }
 }

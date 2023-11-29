@@ -136,11 +136,6 @@ const MaterialModules = [
       multi: true,
     },
     {
-      provide: AUTH_SETTINGS,
-      useValue: { appVerificationDisabledForTesting: true },
-    },
-    { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
-    {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { subscriptSizing: 'dynamic' },
     },
