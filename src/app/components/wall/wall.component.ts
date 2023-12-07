@@ -15,6 +15,7 @@ import {
 import { distanceFrom } from 'src/app/entity/colors';
 import { ApiService } from 'src/app/service/api.service';
 import { UserService } from 'src/app/service/user.service';
+import { ArtworksService } from 'src/app/service/artworks.service';
 
 interface RouteDataEntity {
   data?: WallEntity[];
@@ -41,18 +42,20 @@ export class WallComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private apiService: ApiService,
+    private service: ArtworksService
   ) {}
 
   ngOnInit() {
+    this.apiService.showLoader();
     this.activatedRoute.fragment.subscribe({
       next: (data: any) => {
         this.filterBy = JSON.parse(data);
       },
     });
-    this.activatedRoute.data.subscribe({
-      next: (data: RouteDataEntity) => {
+    this.service.getArtworks().subscribe({
+      next: (data:  WallEntity[]) => {
         const photos = orderBy(
-          data.data as WallEntity[],
+          data as WallEntity[],
           ['last_modified'],
           ['desc']
         );
@@ -70,6 +73,7 @@ export class WallComponent implements OnInit {
           }, [])
           .join(',');
         this.apiService.colorsSubject.next(colors);
+        this.apiService.hideLoader();
       },
     });
   }

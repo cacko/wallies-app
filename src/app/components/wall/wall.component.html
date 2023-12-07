@@ -1,4 +1,4 @@
-<cdk-virtual-scroll-viewport itemSize="100" minBufferPx="2000" maxBufferPx="4000" appendOnly="true" class="viewport" (scrolledIndexChange)="onScrollChange">
+<cdk-virtual-scroll-viewport itemSize="50" minBufferPx="5000" maxBufferPx="8000" appendOnly="true" class="viewport" (scrolledIndexChange)="onScrollChange">
   <div grid>
     <div grid-item *cdkVirtualFor="let photo of items | wallFilter:filterBy">
       <app-image item [data]="photo">

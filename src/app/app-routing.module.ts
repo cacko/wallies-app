@@ -35,9 +35,6 @@ const routes: Routes = [
     path: '',
     component: WallComponent,
     pathMatch: 'full',
-    resolve: {
-      data: artworksResolver,
-    },
     canActivate: [AuthGuard],
     data: { authGuardPipe: redirectUnauthorizedToLogin },
   },

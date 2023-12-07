@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject, of, tap, expand, reduce, EMPTY } from 'rxjs';
+import { Observable, Subject, delay, tap, expand, reduce, EMPTY } from 'rxjs';
 import { ApiConfig, ApiType, WSLoading } from '../entity/api.entity';
 import {
   HttpClient,
@@ -27,6 +27,7 @@ import {
   find,
   isArrayLike,
   concat,
+
 } from 'lodash-es';
 import * as md5 from 'md5';
 
@@ -46,7 +47,7 @@ export class ApiService implements HttpInterceptor {
   errorSubject = new Subject<string>();
   error = this.errorSubject.asObservable();
   userToken = '';
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   intercept(
     req: HttpRequest<any>,
@@ -109,6 +110,45 @@ export class ApiService implements HttpInterceptor {
   //   );
   // }
 
+
+  private process(data: any, type: ApiType) {
+
+    const cacheKey = this.cacheKey(type);
+    const cached = this.inCache(cacheKey) || [];
+
+    if (isArray(data)) {
+      const cachedIds = map(cached, 'id');
+      cached.push(...filter(data, (d) => !cachedIds.includes(d.id)));
+      data
+        .filter((d) => cachedIds.includes(d.id))
+        .forEach((d) => {
+          const idx = findIndex(cached, { id: d.id });
+          if (isNumber(idx)) {
+            cached[idx] = d;
+          }
+        });
+    } else if (isObject(data)) {
+      cached.push(data);
+    } else {
+      return;
+    }
+    localStorage.setItem(
+      cacheKey,
+      JSON.stringify({ data: cached, timestamp: moment() })
+    );
+
+    if (isArray(data)) {
+      return cached.filter((c: any) => !c.deleted);
+    } else {
+      const returnId = 'id' in data ? data.id : '';
+      return find(cached, { id: returnId });
+    }
+
+  }
+
+
+
+
   fetch(
     type: ApiType,
     query: string = '',
@@ -134,46 +174,23 @@ export class ApiService implements HttpInterceptor {
         .pipe(
           expand((res) => {
             const nextPage = res.headers.get('x-pagination-next');
+            const pageNo = parseInt(String(res.headers.get('x-pagination-page')));
             return nextPage
               ? this.httpClient.get(nextPage, {
-                  headers: { 'X-User-Token': this.userToken },
-                  observe: 'response',
-                })
+                headers: { 'X-User-Token': this.userToken },
+                observe: 'response',
+              }).pipe(delay(pageNo * 200))
               : EMPTY;
           }),
-          reduce((acc, current): any =>  {
+          reduce((acc, current): any => {
             const data = current.body || {};
+            const pageNo = parseInt(String(current.headers.get('x-pagination-page')));
             return isArrayLike(data) ? concat(acc, data) : data;
           }, [])
         )
         .subscribe({
           next: (data: any) => {
-            if (isArray(data)) {
-              const cachedIds = map(cached, 'id');
-              cached.push(...filter(data, (d) => !cachedIds.includes(d.id)));
-              data
-                .filter((d) => cachedIds.includes(d.id))
-                .forEach((d) => {
-                  const idx = findIndex(cached, { id: d.id });
-                  if (isNumber(idx)) {
-                    cached[idx] = d;
-                  }
-                });
-            } else if (isObject(data)) {
-              cached.push(data);
-            } else {
-              return;
-            }
-            localStorage.setItem(
-              cacheKey,
-              JSON.stringify({ data: cached, timestamp: moment() })
-            );
-            if (isArray(data)) {
-              subscriber.next(cached.filter((c: any) => !c.deleted));
-            } else {
-              const returnId = 'id' in data ? data.id : '';
-              subscriber.next(find(cached, { id: returnId }));
-            }
+            subscriber.next(this.process(data, type));
           },
           error: (error: any) => console.debug(error),
         });
