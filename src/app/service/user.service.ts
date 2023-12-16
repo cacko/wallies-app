@@ -3,6 +3,7 @@ import { Auth, User, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, au
 import { EMPTY, Observable, Subject } from "rxjs";
 import { ApiService } from "./api.service";
 import { Admins } from "../entity/user.entity";
+import { LoaderService } from "./loader.service";
 @Injectable({ providedIn: "root" })
 export class UserService {
 
@@ -12,13 +13,14 @@ export class UserService {
 
   constructor(
     private auth: Auth,
-    private api: ApiService
+    private api: ApiService,
+    private loader: LoaderService
   ) {
     this.user = authState(this.auth);
   }
 
   async googeLogin() {
-    this.api.showLoader();
+    this.loader.show();
     const provider = new GoogleAuthProvider();
     const result = await signInWithPopup(this.auth, provider);
     const user = result.user;

@@ -7,7 +7,6 @@ import {
 } from '@angular/fire/auth-guard';
 import { LoginComponent } from './components/login/login.component';
 import { WallComponent } from './components/wall/wall.component';
-import { artworksResolver } from './service/artworks.service';
 import { ViewComponent } from './components/view/view.component';
 import { artworkResolver } from './service/artwork.service';
 import { PrivacyComponent } from './components/privacy/privacy.component';

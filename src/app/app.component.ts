@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from './service/api.service';
 import { WSLoading } from './entity/api.entity';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { LoaderService } from './service/loader.service';
 
 enum SearchOriginator {
   BUTTON = 1,
@@ -29,7 +30,7 @@ const SEARCH_STATES = ['search', 'search_off'];
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  loading = true;
+  $loading = this.loader.visible;
   updating = false;
   connected = false;
   selectedCategories: string[] = [];
@@ -46,9 +47,10 @@ export class AppComponent implements OnInit {
     public platform: Platform,
     private api: ApiService,
     private activatedRoute: ActivatedRoute,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private loader: LoaderService
   ) {
-    this.api.showLoader();
+    this.loader.show();
     if (this.swUpdate.isEnabled) {
       this.swUpdate.versionUpdates.subscribe((evt: VersionEvent) => {
         if (evt.type == 'VERSION_READY') {
@@ -67,12 +69,6 @@ export class AppComponent implements OnInit {
         this.swUpdate.checkForUpdate();
       });
     }
-    this.api.loading.subscribe((res) => {
-      setTimeout(() => {
-        [WSLoading.BLOCKING_OFF, WSLoading.BLOCKING_ON].includes(res) &&
-          (this.loading = WSLoading.BLOCKING_ON === res);
-      });
-    });
     this.api.colors.subscribe({
       next: (colors: string) => {
         this.colors = colors;
@@ -108,13 +104,13 @@ export class AppComponent implements OnInit {
     this.router.events.subscribe((ev: Event) => {
       switch (ev.type) {
         case EventType.NavigationStart:
-          return this.api.showLoader();
+          return this.loader.show();
 
         case EventType.NavigationEnd:
         case EventType.NavigationCancel:
         case EventType.NavigationError:
         case EventType.NavigationSkipped:
-          return this.api.hideLoader();
+          return this.loader.hide();
       };
     });
   }

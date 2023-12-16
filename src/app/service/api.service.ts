@@ -30,6 +30,7 @@ import {
 
 } from 'lodash-es';
 import * as md5 from 'md5';
+import { LoaderService } from './loader.service';
 
 interface CacheEntry {
   timestamp: moment.Moment;
@@ -40,20 +41,18 @@ interface CacheEntry {
   providedIn: 'root',
 })
 export class ApiService implements HttpInterceptor {
-  private loaderSubject = new Subject<WSLoading>();
-  loading = this.loaderSubject.asObservable();
   colorsSubject = new Subject<string>();
   colors = this.colorsSubject.asObservable();
   errorSubject = new Subject<string>();
   error = this.errorSubject.asObservable();
   userToken = '';
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private loader: LoaderService) { }
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    this.showLoader();
+    this.loader.show();
     return next.handle(req).pipe(
       tap(
         (event: HttpEvent<any>) => {
@@ -69,15 +68,9 @@ export class ApiService implements HttpInterceptor {
     );
   }
   private onEnd(): void {
-    this.hideLoader();
+    this.loader.hide();
   }
 
-  public showLoader(): void {
-    this.loaderSubject.next(WSLoading.BLOCKING_ON);
-  }
-  public hideLoader(): void {
-    this.loaderSubject.next(WSLoading.BLOCKING_OFF);
-  }
 
   // post(
   //   type: ApiType,
@@ -157,13 +150,13 @@ export class ApiService implements HttpInterceptor {
     return new Observable((subscriber: any) => {
       let id = query;
 
-      const cacheKey = this.cacheKey(type);
-      const cached = this.inCache(cacheKey) || [];
-      if (cached.length) {
-        params['last_modified'] = head(
-          orderBy(cached, ['last_modified'], ['desc'])
-        ).last_modified;
-      }
+      // const cacheKey = this.cacheKey(type);
+      // const cached = this.inCache(cacheKey) || [];
+      // if (cached.length) {
+      //   params['last_modified'] = head(
+      //     orderBy(cached, ['last_modified'], ['desc'])
+      //   ).last_modified;
+      // }
 
       this.httpClient
         .get(`${ApiConfig.BASE_URI}/${type}/${id}`, {
@@ -171,26 +164,26 @@ export class ApiService implements HttpInterceptor {
           params: omitBy(params, isUndefined),
           observe: 'response',
         })
-        .pipe(
-          expand((res) => {
-            const nextPage = res.headers.get('x-pagination-next');
-            const pageNo = parseInt(String(res.headers.get('x-pagination-page')));
-            return nextPage
-              ? this.httpClient.get(nextPage, {
-                headers: { 'X-User-Token': this.userToken },
-                observe: 'response',
-              }).pipe(delay(pageNo * 200))
-              : EMPTY;
-          }),
-          reduce((acc, current): any => {
-            const data = current.body || {};
-            const pageNo = parseInt(String(current.headers.get('x-pagination-page')));
-            return isArrayLike(data) ? concat(acc, data) : data;
-          }, [])
-        )
+        // .pipe(
+        //   expand((res) => {
+        //     const nextPage = res.headers.get('x-pagination-next');
+        //     const pageNo = parseInt(String(res.headers.get('x-pagination-page')));
+        //     return nextPage
+        //       ? this.httpClient.get(nextPage, {
+        //         headers: { 'X-User-Token': this.userToken },
+        //         observe: 'response',
+        //       }).pipe(delay(pageNo * 200))
+        //       : EMPTY;
+        //   }),
+        //   reduce((acc, current): any => {
+        //     const data = current.body || {};
+        //     const pageNo = parseInt(String(current.headers.get('x-pagination-page')));
+        //     return isArrayLike(data) ? concat(acc, data) : data;
+        //   }, [])
+        // )
         .subscribe({
           next: (data: any) => {
-            subscriber.next(this.process(data, type));
+            subscriber.next(data);
           },
           error: (error: any) => console.debug(error),
         });

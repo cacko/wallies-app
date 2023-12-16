@@ -27,6 +27,7 @@ export class ViewComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.data.subscribe({
       next: (data: RouteDataEntity) => {
+        console.log(data);
         const item = data.data as WallEntity;
         this.data = item;
       },

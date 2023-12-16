@@ -31,7 +31,12 @@
             ],
             "scripts": [],
             "serviceWorker": true,
-            "ngswConfigPath": "ngsw-config.json"
+            "ngswConfigPath": "ngsw-config.json",
+            "allowedCommonJsDependencies": [
+              "moment",
+              "file-saver",
+              "md5"
+            ]
           },
           "configurations": {
             "production": {
