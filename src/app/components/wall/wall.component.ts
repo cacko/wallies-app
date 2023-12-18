@@ -34,14 +34,14 @@ export interface RouteFilter {
   selector: 'app-wall',
   templateUrl: './wall.component.html',
   styleUrls: ['./wall.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WallComponent implements OnInit {
   @Input() filterBy: RouteFilter = { c: [] };
 
   items = new PhotoDataSource(this.service, this.loader)
   loading = true;
-  colors = '';          
+  colors = '';
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -94,7 +94,7 @@ export class WallComponent implements OnInit {
 }
 export class PhotoDataSource extends DataSource<WallEntity | undefined> {
   private _length = 10000;
-  private _pageSize = 40;
+  private _pageSize = 100;
   private _cachedData = Array.from<WallEntity>({ length: this._length });
   private _fetchedPages = new Set<number>();
   private readonly _dataStream = new BehaviorSubject<(WallEntity | undefined)[]>(this._cachedData);
@@ -175,21 +175,21 @@ export class PhotoDataSource extends DataSource<WallEntity | undefined> {
     this._fetchedPages.add(page);
     return new Promise((resolve) => {
       this.api.fetch(this._pageSize, page + 1).subscribe({
-      next: (data: any) => {
-        if (this._length == 10000) {
-          this._length = this.api.total;
-          this._cachedData = Array.from<WallEntity>({ length: this._length });
+        next: (data: any) => {
+          if (this._length == 10000) {
+            this._length = this.api.total;
+            this._cachedData = Array.from<WallEntity>({ length: this._length });
+          }
+          const photos = data as WallEntity[];
+          this._cachedData.splice(
+            page * this._pageSize,
+            this._pageSize,
+            ...photos,
+          );
+          resolve();
+          this._dataStream.next(this._cachedData);
         }
-        const photos = data as WallEntity[];
-        this._cachedData.splice(
-          page * this._pageSize,
-          this._pageSize,
-          ...photos,
-        );
-        resolve();
-        this._dataStream.next(this._cachedData);
-      }
-    })});
+      })});
   }
 }
 
