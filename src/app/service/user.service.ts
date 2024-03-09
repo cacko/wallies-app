@@ -22,6 +22,7 @@ export class UserService {
   async googeLogin() {
     this.loader.show();
     const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
     const result = await signInWithPopup(this.auth, provider);
     const user = result.user;
     const credential = GoogleAuthProvider.credentialFromResult(result);

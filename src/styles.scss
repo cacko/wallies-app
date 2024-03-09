@@ -47,6 +47,11 @@ html {
 *:before,
 *:after {
   box-sizing: inherit;
+  user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 html,
