@@ -1,5 +1,5 @@
-<mat-button-toggle-group [vertical]="vertical" multiple (change)="onChange($event)" [attr.vertical]="vertical?'1':null">
+<mat-button-toggle-group [hideMultipleSelectionIndicator]="true" [vertical]="vertical" multiple (change)="onChange($event)" [attr.vertical]="vertical?'1':null" >
   <mat-button-toggle *ngFor="let color of items" [value]="color" [checked]="selectedColors.includes(color)">
-    <span [ngStyle]="getStyle(color)" value>&nbsp;</span>
+    <span [ngStyle]="getStyle(color)"  value>&nbsp;</span>
   </mat-button-toggle>
 </mat-button-toggle-group>

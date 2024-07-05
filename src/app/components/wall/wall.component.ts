@@ -4,23 +4,25 @@ import {
   OnInit,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ApiType, WallCategory, WallEntity } from 'src/app/entity/api.entity';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { WallCategory, WallEntity } from '../../entity/api.entity';
 import {
   flatten,
-  orderBy,
   uniq,
   pull,
   isEmpty,
   isString
 } from 'lodash-es';
-import { distanceFrom } from 'src/app/entity/colors';
-import { ApiService } from 'src/app/service/api.service';
-import { UserService } from 'src/app/service/user.service';
-import { ArtworksService } from 'src/app/service/artworks.service';
+import { distanceFrom } from '../../entity/colors';
+import { ArtworksService } from '../../service/artworks.service';
 import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
-import { LoaderService } from 'src/app/service/loader.service';
+import { LoaderService } from '../../service/loader.service';
+import { CommonModule } from '@angular/common';
+import { ImageComponent } from '../image/image.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { ApiService } from '../../service/api.service';
+
 interface RouteDataEntity {
   data?: WallEntity[];
 }
@@ -34,6 +36,13 @@ export interface RouteFilter {
   selector: 'app-wall',
   templateUrl: './wall.component.html',
   styleUrls: ['./wall.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ImageComponent,
+    ScrollingModule,
+    RouterModule
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WallComponent implements OnInit {
@@ -45,7 +54,7 @@ export class WallComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private apiService: ApiService,
+    private api: ApiService,
     private service: ArtworksService,
     private loader: LoaderService
   ) {
@@ -79,7 +88,7 @@ export class WallComponent implements OnInit {
             return res;
           }, [])
           .join(',');
-        this.apiService.colorsSubject.next(colors);
+        this.api.colorsSubject.next(colors);
       }
     });
   }
@@ -168,7 +177,7 @@ export class PhotoDataSource extends DataSource<WallEntity | undefined> {
     return Math.floor(index / this._pageSize);
   }
 
-  private _fetchPage(page: number):Promise<void> {
+  private _fetchPage(page: number): Promise<void> {
     if (this._fetchedPages.has(page)) {
       return Promise.resolve();
     }
@@ -189,7 +198,8 @@ export class PhotoDataSource extends DataSource<WallEntity | undefined> {
           resolve();
           this._dataStream.next(this._cachedData);
         }
-      })});
+      })
+    });
   }
 }
 

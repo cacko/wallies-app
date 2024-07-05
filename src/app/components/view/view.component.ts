@@ -1,9 +1,15 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { head, snakeCase } from 'lodash-es';
-import { WallCategory, WallEntity } from 'src/app/entity/api.entity';
+import { snakeCase } from 'lodash-es';
+import { WallEntity } from '../../entity/api.entity';
 import { saveAs } from 'file-saver';
+import { CommonModule } from '@angular/common';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
+import { DragScrollDirective } from '../../drag-scroll.directive';
 
 interface RouteDataEntity {
   data?: WallEntity;
@@ -13,6 +19,15 @@ interface RouteDataEntity {
   selector: 'app-view',
   templateUrl: './view.component.html',
   styleUrls: ['./view.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatProgressSpinnerModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatButtonModule,
+    DragScrollDirective
+  ]
 })
 export class ViewComponent implements OnInit {
   data!: WallEntity;
@@ -27,7 +42,6 @@ export class ViewComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.data.subscribe({
       next: (data: RouteDataEntity) => {
-        console.log(data);
         const item = data.data as WallEntity;
         this.data = item;
       },

@@ -12,11 +12,12 @@
   }
 
   [buttons] {
+    font-family: "Major Mono Display";
     display: flex;
     flex-direction: column;
     row-gap: 1em;
     button {
-      width: 15rem;
-    };
+      width: 100%;
+    }
   }
 }

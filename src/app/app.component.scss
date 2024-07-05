@@ -1,5 +1,4 @@
 :host {
-
   mat-toolbar {
     display: flex;
     justify-content: space-between;
@@ -15,8 +14,13 @@
       flex-direction: column-reverse;
     }
 
+    [mat-icon-button] {
+      padding: 0;
+    }
+
     [actions] {
       display: flex;
+
 
       @media screen and (min-width: 450px) {
         flex-direction: column-reverse;
@@ -33,15 +37,5 @@
       }
     }
 
-    @media screen and (max-width: 449px) {
-      app-colors {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-
-      }
-    }
   }
-
-
 }

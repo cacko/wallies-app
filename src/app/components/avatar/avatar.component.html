@@ -1,1 +1,6 @@
-<div photo [ngStyle]="imageStyle" *ngIf="user"></div>
+<img
+    *ngIf="user.photoURL"
+    [ngSrc]="user.photoURL"
+    fill
+    priority
+>

@@ -1,16 +1,31 @@
 <div info>
-  <caption>
-    <h1>{{data.title}}</h1>
-    <h3 class="subtitle">{{data.category}}</h3>
-  </caption>
-  <div controls>
-    <button mat-icon-button (click)="downloadImage()" [disabled]="buttonDisabled" matTooltip="download">
-      <mat-icon [attr.hide]="buttonDisabled?'1':null">download</mat-icon>
-      <mat-progress-spinner color="warn" mode="indeterminate" [diameter]="buttonDisabled?24:0"></mat-progress-spinner>
-    </button>
-  </div>
+    <caption>
+        <h3>{{data.title}}</h3>
+        <h5 class="subtitle">{{data.category}}</h5>
+    </caption>
+    <div controls>
+        <button
+            mat-fab
+            (click)="downloadImage()"
+            [disabled]="buttonDisabled"
+            matTooltip="download"
+        >
+            <mat-icon [attr.hide]="buttonDisabled?'1':null">download</mat-icon>
+            <mat-progress-spinner
+                color="warn"
+                mode="indeterminate"
+                [diameter]="buttonDisabled?24:0"
+            ></mat-progress-spinner>
+        </button>
+    </div>
 </div>
-<div image-container [ngStyle]="getImageStyle()">
-  <img [src]="data.webp_src">
+<div
+    image-container
+    [ngStyle]="getImageStyle()"
+>
+    <img
+        [src]="data.webp_src"
+        appDragScroll
+        draggable="false"
+    >
 </div>
-

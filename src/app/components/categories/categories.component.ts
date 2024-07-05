@@ -1,11 +1,17 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { MatChipListboxChange } from '@angular/material/chips';
+import { MatChipsModule, MatChipListboxChange } from '@angular/material/chips';
 import { isString } from 'lodash-es';
-import { WallCategory } from 'src/app/entity/api.entity';
+import { WallCategory } from '../../entity/api.entity';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatChipsModule,
+  ],
   styleUrls: ['./categories.component.scss'],
 })
 export class CategoriesComponent implements OnInit {

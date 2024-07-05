@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiType, WallEntity } from '../entity/api.entity';
+import { ApiType } from '../entity/api.entity';
 import { ApiService } from './api.service';
 import { tap, map } from 'rxjs';
 
@@ -13,6 +13,7 @@ export class ArtworksService {
   constructor(private api: ApiService) { }
 
   fetch(limit: number, page: number): any {
+    
     return this.api.fetch(ApiType.ARTWORKS, '', { limit, page }).pipe(
       tap((res) => {
         if (!this.total) {

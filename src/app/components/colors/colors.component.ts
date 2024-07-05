@@ -1,13 +1,19 @@
  import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatButtonToggleChange } from '@angular/material/button-toggle';
-import { MatChipListboxChange } from '@angular/material/chips';
+import { MatButtonToggleChange, MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService } from 'src/app/service/api.service';
+import { ApiService } from '../..//service/api.service';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-colors',
   templateUrl: './colors.component.html',
-  styleUrls: ['./colors.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatButtonToggleModule
+  ]
 })
 export class ColorsComponent implements OnInit {
   @Input() vertical: boolean = false;

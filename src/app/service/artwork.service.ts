@@ -17,7 +17,6 @@ export class ArtworkService {
   getArtwork(id: string): any {
     return this.api.fetch(ApiType.ARTWORK, id).pipe(
       map((res: any) => {
-        console.log(res);
         return res.body;
       })
     );

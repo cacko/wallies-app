@@ -1,17 +1,24 @@
-import { AfterContentChecked, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SwUpdate, VersionEvent } from '@angular/service-worker';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable, Subject, interval } from 'rxjs';
+import { interval } from 'rxjs';
 import { UserService } from './service/user.service';
-import { Auth } from '@angular/fire/auth';
-import { ActivatedRoute, OnSameUrlNavigation, Router, Event, EventType } from '@angular/router';
+import { ActivatedRoute, Router, Event, EventType, RouterModule } from '@angular/router';
 import { Platform } from '@angular/cdk/platform';
 import { some } from 'lodash-es';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from './service/api.service';
-import { WSLoading } from './entity/api.entity';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { LoaderService } from './service/loader.service';
+import { CommonModule } from '@angular/common';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { ColorsComponent } from './components/colors/colors.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { AvatarComponent } from './components/avatar/avatar.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 enum SearchOriginator {
   BUTTON = 1,
@@ -28,21 +35,33 @@ const SEARCH_STATES = ['search', 'search_off'];
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatToolbarModule,
+    ColorsComponent,
+    MatButtonModule,
+    MatIconModule,
+    MatDividerModule,
+    MatMenuModule,
+    RouterModule,
+    AvatarComponent,
+    LoaderComponent
+  ]
 })
 export class AppComponent implements OnInit {
-  $loading = this.loader.visible;
   updating = false;
   connected = false;
   selectedCategories: string[] = [];
   selectedColors: string[] = [];
   colors = '';
+  $user = this.user.user;
 
   constructor(
     private swUpdate: SwUpdate,
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
     public user: UserService,
-    private auth: Auth,
     public router: Router,
     public platform: Platform,
     private api: ApiService,
@@ -81,15 +100,9 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.user.init();
     this.colors = '';
     this.spinner.show();
-    // this.user.user.subscribe((user) => {
-    //   user?.getIdToken().then((res) => {
-    //     this.api.userToken = res;
-    //     console.debug(res);
-    //   });
-    //   this.api.hideLoader();
-    // });
 
     this.activatedRoute.fragment.subscribe({
       next: (data: any) => {
@@ -120,7 +133,7 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
-    this.auth.signOut().then(() => this.router.navigateByUrl('/login'));
+    this.user.logout().then(() => this.router.navigateByUrl("/login"));
   }
 
   onCategoryChange(selected: string[]) {

@@ -1,22 +1,23 @@
-import { Injectable } from "@angular/core";
-import { Auth, User, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, authState, signInAnonymously, signOut } from "@angular/fire/auth";
-import { EMPTY, Observable, Subject } from "rxjs";
+import { Injectable, inject } from "@angular/core";
+import { Auth, User, GoogleAuthProvider, signInWithPopup, authState, signInAnonymously, signOut } from "@angular/fire/auth";
+import { EMPTY, Observable } from "rxjs";
 import { ApiService } from "./api.service";
-import { Admins } from "../entity/user.entity";
 import { LoaderService } from "./loader.service";
 @Injectable({ providedIn: "root" })
 export class UserService {
 
-  public readonly user: Observable<User | null> = EMPTY;
+  public user: Observable<User | null> = authState(this.auth);
 
   isAdmin: boolean = false;
 
   constructor(
-    private auth: Auth,
-    private api: ApiService,
+    private auth: Auth = inject(Auth),
     private loader: LoaderService
   ) {
-    this.user = authState(this.auth);
+
+  }
+
+  init() {
   }
 
   async googeLogin() {
@@ -24,19 +25,15 @@ export class UserService {
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({ prompt: 'select_account' });
     const result = await signInWithPopup(this.auth, provider);
-    const user = result.user;
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-
+    return result;
   }
   async login_anon() {
-    const result = await signInAnonymously(this.auth);
-    const user = result.user;
+    return await signInAnonymously(this.auth);
   }
 
 
-  async logout() {
-    return await signOut(this.auth);
-
+  logout() {
+    return signOut(this.auth);
   }
 
 }

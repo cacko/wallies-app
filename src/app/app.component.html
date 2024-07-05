@@ -1,4 +1,4 @@
-<app-loader *ngIf="$loading | async"></app-loader>
+<app-loader></app-loader>
 <mat-toolbar color="primary">
     <div
         title
@@ -12,13 +12,13 @@
     ></app-colors>
     <div
         actions
-        *ngIf="user.user | async as appUser"
+        *ngIf="($user | async) as user"
     >
         <button
             mat-icon-button
             [matMenuTriggerFor]="usermenu"
         >
-            <app-avatar [user]="appUser"></app-avatar>
+            <app-avatar [user]="user"></app-avatar>
         </button>
         <mat-menu #usermenu="matMenu">
             <button

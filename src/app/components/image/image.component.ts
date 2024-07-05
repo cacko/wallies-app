@@ -1,13 +1,21 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Dialog } from '@angular/cdk/dialog';
-import { ImageZoomComponent } from '../image-zoom/image-zoom.component';
 import { fromEvent } from 'rxjs';
-import { WallEntity } from 'src/app/entity/api.entity';
+import { WallEntity } from '../../entity/api.entity';
+import { MatCardModule } from "@angular/material/card"
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-image',
   templateUrl: './image.component.html',
+  standalone: true,
   styleUrls: ['./image.component.scss'],
+  imports: [
+    CommonModule,
+    MatCardModule,
+    NgOptimizedImage
+
+  ]
 })
 export class ImageComponent implements OnInit {
   src: string = '';
@@ -15,27 +23,16 @@ export class ImageComponent implements OnInit {
   caption: string = '';
 
   @Output() layout = new EventEmitter<boolean>();
-  constructor(public dialog: Dialog) {}
+  constructor(public dialog: Dialog) { }
 
   ngOnInit(): void {
     const img = new Image();
     img.src = this.data.webp_src;
     fromEvent(img, 'load').subscribe((_) => this.layout.emit(true));
-    // this.src = this.data.content;
-    // this.contentType = this.data.contentType || 'image/webp';
     this.caption = this.data.title || '';
   }
 
   @Input() data!: WallEntity;
   @Input() query!: string;
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open<string>(ImageZoomComponent, {
-      panelClass: 'image-zoom-panel',
-      backdropClass: 'image-zoom-backdrop',
-      hasBackdrop: true,
-      autoFocus: 'dialog',
-      data: this.data,
-    });
-  }
 }

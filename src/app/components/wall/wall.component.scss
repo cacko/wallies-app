@@ -13,20 +13,20 @@
   [grid] {
     column-gap: 0;
     row-gap: 0;
-    // @supports (grid-template-rows: masonry) {
-    //   display: grid;
-    //   grid-auto-flow: dense;
-    //   grid-template-rows: masonry;
+    @supports (grid-template-rows: masonry) {
+      display: grid;
+      grid-auto-flow: dense;
+      grid-template-rows: masonry;
 
-    //   @media screen and (min-width: 450px) {
-    //     grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-    //   }
-    //   @media screen and (min-width: 1850px) {
-    //     grid-template-columns: repeat(auto-fit, minmax(calc(100vw / 4), 1fr));
-    //   }
-    // }
+      @media screen and (min-width: 450px) {
+        grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      }
+      @media screen and (min-width: 1850px) {
+        grid-template-columns: repeat(auto-fit, minmax(calc(100vw / 4), 1fr));
+      }
+    }
 
-    // @supports not (grid-template-rows: masonry) {
+    @supports not (grid-template-rows: masonry) {
 
       column-count: 1;
       width: 100%;
@@ -45,12 +45,11 @@
 
       [grid-item] {
         margin: 0;
-        // display: inline-block;
+        height: 300px;
         margin-bottom: 0px;
         width: 100%;
       }
-    // }
-
+    }
 
     [grid-item] {
       &[filtered] {

@@ -4,7 +4,7 @@
   width: 190%;
   overflow: hidden;
   flex-direction: column;
-position: relative;
+  position: relative;
   [info] {
     position: absolute;
     width: 100%;
@@ -16,7 +16,7 @@ position: relative;
     padding: 1em;
 
     &:hover {
-      background-color: rgba(0,0,0,0.5);
+      background-color: rgba(0, 0, 0, 0.5);
     }
 
     caption {
@@ -24,9 +24,12 @@ position: relative;
       display: flex;
       flex-direction: column;
       column-gap: 0;
-      h1,
       h3 {
         margin: 0;
+      }
+      h5 {
+        margin: 0;
+        font-family: 'Major Mono Display';
       }
     }
   }
