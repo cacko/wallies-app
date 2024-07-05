@@ -1,5 +1,4 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes, ActivatedRouteSnapshot,RouterStateSnapshot  } from '@angular/router';
+import { Routes, ActivatedRouteSnapshot,RouterStateSnapshot  } from '@angular/router';
 import {
   AuthGuard,
   redirectUnauthorizedTo,
@@ -29,7 +28,7 @@ const redirectLoggedInToPreviousPage = (next: ActivatedRouteSnapshot, state: Rou
   return redirectLoggedInTo(redirectUrl);
 };
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: '',
     component: WallComponent,
@@ -60,11 +59,3 @@ const routes: Routes = [
     pathMatch: 'full',
   },
 ];
-
-@NgModule({
-  imports: [
-    RouterModule.forRoot(routes),
-  ],
-  exports: [RouterModule],
-})
-export class AppRoutingModule {}

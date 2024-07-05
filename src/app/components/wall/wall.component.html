@@ -1,4 +1,4 @@
-<cdk-virtual-scroll-viewport itemSize="50" appendOnly="true" class="viewport" (scrolledIndexChange)="onScrollChange">
+<cdk-virtual-scroll-viewport itemSize="150" class="viewport" >
   <div grid>
     <div grid-item *cdkVirtualFor="let photo of items">
       <app-image item [data]="photo" *ngIf="photo">

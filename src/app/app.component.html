@@ -16,25 +16,6 @@
     >
         <button
             mat-icon-button
-            [matMenuTriggerFor]="catmenu"
-        >
-            <mat-icon
-                [matBadge]="selectedCategories.length"
-                matBadgeColor="warn"
-                [matBadgeHidden]="selectedCategories.length == 0"
-                fontIcon="category"
-                aria-hidden="false"
-            ></mat-icon>
-        </button>
-        <mat-menu #catmenu="matMenu">
-            <app-categories
-                [selected]="selectedCategories"
-                (change)="onCategoryChange($event)"
-                (click)="$event.stopPropagation();"
-            ></app-categories>
-        </mat-menu>
-        <button
-            mat-icon-button
             [matMenuTriggerFor]="usermenu"
         >
             <app-avatar [user]="appUser"></app-avatar>
