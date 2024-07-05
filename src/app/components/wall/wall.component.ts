@@ -2,9 +2,10 @@ import {
   Component,
   Input,
   OnInit,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  inject
 } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { WallCategory, WallEntity } from '../../entity/api.entity';
 import {
   flatten,
@@ -15,17 +16,15 @@ import {
 } from 'lodash-es';
 import { distanceFrom } from '../../entity/colors';
 import { ArtworksService } from '../../service/artworks.service';
-import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { LoaderService } from '../../service/loader.service';
 import { CommonModule } from '@angular/common';
 import { ImageComponent } from '../image/image.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ApiService } from '../../service/api.service';
-
-interface RouteDataEntity {
-  data?: WallEntity[];
-}
+import { ColorsComponent } from '../colors/colors.component';
+import { ColorsService } from '../../service/colors.service';
 
 export interface RouteFilter {
   c?: string[];
@@ -35,13 +34,13 @@ export interface RouteFilter {
 @Component({
   selector: 'app-wall',
   templateUrl: './wall.component.html',
-  styleUrls: ['./wall.component.scss'],
   standalone: true,
   imports: [
     CommonModule,
     ImageComponent,
     ScrollingModule,
-    RouterModule
+    RouterModule,
+    ColorsComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -56,7 +55,9 @@ export class WallComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private api: ApiService,
     private service: ArtworksService,
-    private loader: LoaderService
+    private loader: LoaderService,
+    private colorService: ColorsService,
+    private router: Router = inject(Router)
   ) {
 
   }
@@ -88,6 +89,7 @@ export class WallComponent implements OnInit {
             return res;
           }, [])
           .join(',');
+          console.log(colors);
         this.api.colorsSubject.next(colors);
       }
     });
@@ -100,6 +102,17 @@ export class WallComponent implements OnInit {
   onScrollChange($event: number) {
     this.updateLayout();
   }
+
+  onColorChange(selected: string[]) {
+    this.colorService.selectedSubject.next(selected);
+    this.router.navigate([''], {
+      fragment: JSON.stringify({
+        // c: this.selectedCategories,
+        h: selected,
+      }),
+    });
+  }
+
 }
 export class PhotoDataSource extends DataSource<WallEntity | undefined> {
   private _length = 10000;

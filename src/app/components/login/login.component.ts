@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService } from '../../service/api.service';
 import { UserService } from '../../service/user.service';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { LoaderService } from '../../service/loader.service';
+import { ArtworksService } from '../../service/artworks.service';
+import { WallEntity } from '../../entity/api.entity';
+import { hex2rgb } from '../../entity/colors';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
   standalone: true,
   imports: [
     CommonModule,
@@ -17,16 +17,17 @@ import { LoaderService } from '../../service/loader.service';
     MatIconModule
   ]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
 
   private redirectTo: string = "/";
 
   constructor(
-    private api: ApiService,
+    private artworks: ArtworksService,
     public user: UserService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private loader: LoaderService
+    private element: ElementRef = inject(ElementRef),
+    private renderer: Renderer2 = inject(Renderer2)
   ) { }
 
 
@@ -34,7 +35,22 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((qp: any) => {
       this.redirectTo = qp.redirectTo || "/";
-    })
+      this.artworks.fetch(1, -1).subscribe((res: WallEntity[]) => {
+        const img = res.pop();
+        const colors = (img?.colors.split(",") || ["#000", "#000", "#000"]).map(c1 => hex2rgb(c1));
+        const bgStyle = `linear-gradient(rgba(${colors[0].join(",")}, 0.2), rgb(${colors[1].join(",")}), rgba(${colors[2].join(",")}, 0.2))`;
+        img && this.renderer.setStyle(
+          this.element.nativeElement,
+          "background-image",
+          `url(${img.webp_src}),${bgStyle}`
+        );
+      });
+
+    });
+  }
+
+  ngAfterViewInit(): void {
+
   }
 
 

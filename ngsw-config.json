@@ -1,19 +1,30 @@
 {
   "$schema": "./node_modules/@angular/service-worker/config/schema.json",
   "index": "/index.html",
-  "navigationRequestStrategy": "freshness",
   "assetGroups": [
     {
       "name": "app",
       "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {},
       "resources": {
         "files": [
           "/favicon.ico",
-          "/index.html",
-          "/manifest.webmanifest",
           "/*.css",
-          "/*.js",
-          "/styles.scss"
+          "/*.js"
+        ]
+      }
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/**/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"
+        ],
+        "urls": [
+          "https://cdn.cacko.net/wmedia/**"
         ]
       }
     },
@@ -23,30 +34,23 @@
       "updateMode": "prefetch",
       "resources": {
         "urls": [
-          "https://cdn.cacko.net/wmedia/**"
-        ]
-      }
-    },
-    {
-      "name": "cdn",
-      "installMode": "prefetch",
-      "updateMode": "prefetch",
-      "resources": {
-        "urls": [
           "https://fonts.googleapis.com/**",
           "https://fonts.gstatic.com/**"
         ]
       }
-    },
+    }
+  ],
+  "dataGroups": [
     {
-      "name": "assets",
-      "installMode": "prefetch",
-      "updateMode": "prefetch",
-      "resources": {
-        "files": [
-          "/assets/**",
-          "/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"
-        ]
+      "name": "api-calls",
+      "urls": [
+        "https://wallies.cacko.net/**"
+      ],
+      "version": 2,
+      "cacheConfig": {
+        "strategy": "performance",
+        "maxSize": 0,
+        "maxAge": "1s"
       }
     }
   ]

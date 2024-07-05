@@ -8,7 +8,6 @@ import { LoaderService } from '../../service/loader.service';
   standalone: true,
   imports: [CommonModule, MatProgressBarModule],
   templateUrl: './loader.component.html',
-  styleUrl: './loader.component.scss'
 })
 export class LoaderComponent implements OnInit {
 

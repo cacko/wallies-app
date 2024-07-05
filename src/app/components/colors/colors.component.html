@@ -1,5 +1,22 @@
-<mat-button-toggle-group [hideMultipleSelectionIndicator]="true" [vertical]="vertical" multiple (change)="onChange($event)" [attr.vertical]="vertical?'1':null" >
-  <mat-button-toggle *ngFor="let color of items" [value]="color" [checked]="selectedColors.includes(color)">
-    <span [ngStyle]="getStyle(color)"  value>&nbsp;</span>
-  </mat-button-toggle>
+<mat-button-toggle-group
+    [hideMultipleSelectionIndicator]="true"
+    matRipple="off"
+    [vertical]="vertical"
+    multiple
+    (change)="onChange($event)"
+    [attr.vertical]="vertical?'1':null"
+    *ngIf="items.length > 0 && items[0] !== ''"
+>
+    <mat-button-toggle
+        *ngFor="let color of items"
+        [value]="color"
+        [checked]="selectedColors.includes(color)"
+    >
+        <span
+            [ngStyle]="getStyle(color)"
+            value
+        >
+            &nbsp;
+        </span>
+    </mat-button-toggle>
 </mat-button-toggle-group>

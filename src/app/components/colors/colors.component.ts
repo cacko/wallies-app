@@ -1,9 +1,11 @@
- import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatButtonToggleChange, MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../..//service/api.service';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { MatRippleModule } from '@angular/material/core';
+import { ColorsService } from '../../service/colors.service';
 
 @Component({
   selector: 'app-colors',
@@ -12,7 +14,8 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [
     CommonModule,
     MatButtonModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatRippleModule
   ]
 })
 export class ColorsComponent implements OnInit {
@@ -23,18 +26,14 @@ export class ColorsComponent implements OnInit {
   selectedCategories: string[] = [];
   selectedColors: string[] = [];
   customColors: string[] = [];
-  colors: string|null = '';
+  colors?: string;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private api: ApiService
+    private colorService: ColorsService
   ) {
-    this.api.colors.subscribe({
-      next: (colors: string) => {
-        this.items = (colors || '').split(',').map((c) => c.trim());
-      }
-    });
+
   }
 
   ngOnInit(): void {
@@ -54,10 +53,14 @@ export class ColorsComponent implements OnInit {
                 this.items.splice(this.items.indexOf(cc), 1) &&
                 this.customColors.splice(this.customColors.indexOf(cc), 1)
             );
-        } catch (err) {}
+        } catch (err) { }
       },
     });
-    this.items = (this.colors || '').split(',').map((c) => c.trim());
+    this.colorService.$colors.subscribe((colors) => {
+      this.items = (this.colorService.colors || '').split(',').map((c) => c.trim());
+      console.log(this.items);
+    })
+
   }
 
   getStyle(color: string) {

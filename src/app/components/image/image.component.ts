@@ -9,7 +9,6 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
   selector: 'app-image',
   templateUrl: './image.component.html',
   standalone: true,
-  styleUrls: ['./image.component.scss'],
   imports: [
     CommonModule,
     MatCardModule,

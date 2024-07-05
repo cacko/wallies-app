@@ -1,18 +1,17 @@
 <app-loader></app-loader>
-<mat-toolbar color="primary">
+<mat-toolbar
+    color="primary"
+    *ngIf="($user | async) as user"
+>
     <div
         title
         routerLink="/"
     >
         wallies
     </div>
-    <app-colors
-        [vertical]="true"
-        (selected)="onColorChange($event)"
-    ></app-colors>
     <div
         actions
-        *ngIf="($user | async) as user"
+        *ngIf="user"
     >
         <button
             mat-icon-button

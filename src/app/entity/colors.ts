@@ -1,5 +1,7 @@
 import { chunk, zip } from 'lodash-es';
-import { Subject } from 'rxjs';
+
+export const hex2rgb = (c1: string) => chunk(c1, 2).map((c) => parseInt(c.join(''), 16));
+
 
 export const distance = (c1: string, c2: string) => {
   const rgbs = zip(
@@ -17,3 +19,5 @@ export const distance = (c1: string, c2: string) => {
 export const distanceFrom = (colors: string[], c2: string) => {
   return Math.min(...colors.map((cl) => distance(cl, c2)));
 };
+
+

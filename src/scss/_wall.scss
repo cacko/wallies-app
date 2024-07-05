@@ -1,4 +1,4 @@
-:host {
+app-wall {
   height: 100vh;
   width: 100%;
   overflow: hidden;
@@ -9,7 +9,6 @@
     width: 100%;
   }
 
-
   [grid] {
     column-gap: 0;
     row-gap: 0;
@@ -19,7 +18,7 @@
       grid-template-rows: masonry;
 
       @media screen and (min-width: 450px) {
-        grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(550px, 1fr));
       }
       @media screen and (min-width: 1850px) {
         grid-template-columns: repeat(auto-fit, minmax(calc(100vw / 4), 1fr));
@@ -27,31 +26,18 @@
     }
 
     @supports not (grid-template-rows: masonry) {
-
-      column-count: 1;
+      grid-template-columns: repeat(auto-fit, minmax(550px, 1fr));
+      display: grid;
       width: 100%;
-
-      @media screen and (min-width: 900px) {
-        column-count: 2;
-      }
-
-      @media screen and (min-width: 1400px) {
-        column-count: 2;
-      }
-
-      @media screen and (min-width: 1850px) {
-        column-count: 4;
-      }
-
-      [grid-item] {
-        margin: 0;
-        height: 300px;
-        margin-bottom: 0px;
-        width: 100%;
-      }
     }
 
     [grid-item] {
+        margin: 0;
+        height: auto;
+        aspect-ratio: 16/9;
+        margin-bottom: 0px;
+        width: 100%;
+        transition: all 300ms ease-in-out;
       &[filtered] {
         display: none;
       }

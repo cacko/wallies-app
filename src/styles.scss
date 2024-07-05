@@ -1,5 +1,6 @@
 @use "@angular/material" as mat;
 @use "sass:map";
+@use "./scss/colors" as Colors;
 @use "./scss/theme" as Theme;
 @include mat.core();
 
@@ -7,9 +8,14 @@ html {
   @include mat.core-theme(Theme.$theme);
   @include mat.all-component-themes(Theme.$theme);
   @include mat.typography-hierarchy(Theme.$typography);
+  @include Colors.apply-theme(Theme.$theme);
   @import "./scss/image-container";
   @import "./scss/colors";
   @import "./scss/avatar";
+  @import "./scss/login";
+  @import "./scss/loader";
+  @import "./scss/wall";
+  @import "./scss/image";
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -52,16 +58,12 @@ body {
   }
 }
 
-
-
 .subtitle {
   font-family: Zeyada;
 }
-
 
 a[menu-link] {
   color: inherit;
   text-decoration: none;
   text-transform: none;
-  ;
 }

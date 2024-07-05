@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, isDevMode, OnInit } from '@angular/core';
 import { SwUpdate, VersionEvent } from '@angular/service-worker';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { interval } from 'rxjs';
 import { UserService } from './service/user.service';
 import { ActivatedRoute, Router, Event, EventType, RouterModule } from '@angular/router';
@@ -19,17 +18,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { AvatarComponent } from './components/avatar/avatar.component';
 import { LoaderComponent } from './components/loader/loader.component';
+import { Analytics, setAnalyticsCollectionEnabled } from '@angular/fire/analytics';
+import { ColorsService } from './service/colors.service';
 
-enum SearchOriginator {
-  BUTTON = 1,
-  ESC = 2,
-  ENTER = 3,
-  SLASH = 4,
-  INIT = 5,
-  BACKDROP = 6,
-}
-
-const SEARCH_STATES = ['search', 'search_off'];
 
 @Component({
   selector: 'app-root',
@@ -53,13 +44,14 @@ export class AppComponent implements OnInit {
   updating = false;
   connected = false;
   selectedCategories: string[] = [];
-  selectedColors: string[] = [];
-  colors = '';
   $user = this.user.user;
+
+  $colors = this.colorsService.$colors;
+  $selectedColors = this.colorsService.$selected;
 
   constructor(
     private swUpdate: SwUpdate,
-    private snackBar: MatSnackBar,
+    private analytics: Analytics = inject(Analytics),
     public dialog: MatDialog,
     public user: UserService,
     public router: Router,
@@ -67,30 +59,24 @@ export class AppComponent implements OnInit {
     private api: ApiService,
     private activatedRoute: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private loader: LoaderService
+    private loader: LoaderService,
+    private colorsService: ColorsService
   ) {
+    setAnalyticsCollectionEnabled(this.analytics, true);
     this.loader.show();
-    if (this.swUpdate.isEnabled) {
+    if (isDevMode() === false) {
       this.swUpdate.versionUpdates.subscribe((evt: VersionEvent) => {
         if (evt.type == 'VERSION_READY') {
-          this.updating = true;
-          this.snackBar
-            .open('Update is available', 'Update')
-            .onAction()
-            .subscribe(() =>
-              this.swUpdate
-                .activateUpdate()
-                .then(() => document.location.reload())
-            );
+          this.swUpdate
+            .activateUpdate()
+            .then(() => document.location.reload())
         }
       });
-      interval(10000).subscribe(() => {
-        this.swUpdate.checkForUpdate();
-      });
+      interval(120000).subscribe(() => this.swUpdate.checkForUpdate());
     }
     this.api.colors.subscribe({
       next: (colors: string) => {
-        this.colors = colors;
+        this.colorsService.colorsSubject.next(colors);
       }
     });
   }
@@ -101,7 +87,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.user.init();
-    this.colors = '';
+    this.colorsService.colorsSubject.next(null);
     this.spinner.show();
 
     this.activatedRoute.fragment.subscribe({
@@ -109,7 +95,7 @@ export class AppComponent implements OnInit {
         try {
           const filter = JSON.parse(data);
           this.selectedCategories = filter?.c || [];
-          this.selectedColors = filter?.h || [];
+          this.colorsService.selectedSubject.next(filter?.h || []);
         } catch (err) { }
       },
     });
@@ -141,18 +127,10 @@ export class AppComponent implements OnInit {
     this.router.navigate([''], {
       fragment: JSON.stringify({
         c: this.selectedCategories,
-        h: this.selectedColors,
+        h: this.colorsService.selected
       }),
     });
   }
 
-  onColorChange(selected: string[]) {
-    this.selectedColors = selected;
-    this.router.navigate([''], {
-      fragment: JSON.stringify({
-        c: this.selectedCategories,
-        h: this.selectedColors,
-      }),
-    });
-  }
+
 }
