@@ -2,6 +2,8 @@
 @use "sass:map";
 @use "./scss/colors" as Colors;
 @use "./scss/theme" as Theme;
+@use "./scss/login" as Login;
+
 @include mat.core();
 
 html {
@@ -9,13 +11,14 @@ html {
   @include mat.all-component-themes(Theme.$theme);
   @include mat.typography-hierarchy(Theme.$typography);
   @include Colors.apply-theme(Theme.$theme);
+  @include Login.apply-theme(Theme.$theme);
   @import "./scss/image-container";
   @import "./scss/colors";
   @import "./scss/avatar";
-  @import "./scss/login";
   @import "./scss/loader";
   @import "./scss/wall";
   @import "./scss/image";
+  @import "./scss/simple-icon";
   box-sizing: border-box;
   padding: 0;
   margin: 0;

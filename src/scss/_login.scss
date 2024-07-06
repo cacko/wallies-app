@@ -1,26 +1,40 @@
-app-login {
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  padding: 3vw;
-  padding-bottom: 10vh;
-  background-size: cover;
-  background-blend-mode: color-burn;
-  background-position: center;
-  p {
-    text-align: center;
-  }
+@use "sass:map";
+@use "@angular/material" as mat;
 
-  [buttons] {
-    font-family: "Major Mono Display";
+@mixin apply-theme($theme) {
+  app-login {
+    height: 100vh;
+    width: 100vw;
     display: flex;
+    justify-content: center;
     flex-direction: column;
-    row-gap: 1em;
-    button {
-      width: 100%;
+    align-items: center;
+    padding: 3vw;
+    padding-bottom: 10vh;
+    background-size: cover;
+    background-blend-mode: color-burn;
+    background-position: center;
+    p {
+      text-align: center;
+    }
+
+    [buttons] {
+      font-family: "Major Mono Display";
+      display: flex;
+      flex-direction: column;
+      text-transform: uppercase;
+      row-gap: 1em;
+      button {
+        font-size: 1.5rem;
+        padding: 2rem;
+        width: 100%;
+        &[with-google] {
+          @include mat.button-color($theme, $color-variant: error);
+        }
+        &[anon] {
+          @include mat.button-color($theme, $color-variant: tertiary);
+        }
+      }
     }
   }
 }

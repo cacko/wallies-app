@@ -1,3 +1,13 @@
+<div
+    image-container
+    [ngStyle]="getImageStyle()"
+>
+    <img
+        [src]="data.webp_src"
+        appDragScroll
+        draggable="false"
+    >
+</div>
 <div info>
     <caption>
         <h3>{{data.title}}</h3>
@@ -18,14 +28,4 @@
             ></mat-progress-spinner>
         </button>
     </div>
-</div>
-<div
-    image-container
-    [ngStyle]="getImageStyle()"
->
-    <img
-        [src]="data.webp_src"
-        appDragScroll
-        draggable="false"
-    >
 </div>

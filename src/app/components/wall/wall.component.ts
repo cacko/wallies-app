@@ -89,7 +89,6 @@ export class WallComponent implements OnInit {
             return res;
           }, [])
           .join(',');
-          console.log(colors);
         this.api.colorsSubject.next(colors);
       }
     });

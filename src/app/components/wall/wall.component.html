@@ -1,7 +1,4 @@
-<app-colors
-    [vertical]="true"
-    (selected)="onColorChange($event)"
-></app-colors>
+
 <cdk-virtual-scroll-viewport
     itemSize="25"
     class="viewport"
@@ -22,3 +19,7 @@
         </div>
     </div>
 </cdk-virtual-scroll-viewport>
+<app-colors
+    [vertical]="true"
+    (selected)="onColorChange($event)"
+></app-colors>

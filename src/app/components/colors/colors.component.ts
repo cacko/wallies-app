@@ -58,7 +58,6 @@ export class ColorsComponent implements OnInit {
     });
     this.colorService.$colors.subscribe((colors) => {
       this.items = (this.colorService.colors || '').split(',').map((c) => c.trim());
-      console.log(this.items);
     })
 
   }

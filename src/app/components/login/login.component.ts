@@ -7,6 +7,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { ArtworksService } from '../../service/artworks.service';
 import { WallEntity } from '../../entity/api.entity';
 import { hex2rgb } from '../../entity/colors';
+import { DEVICONS, IconsInterface } from '../../entity/icons.entity';
+import { SimpleIconComponent } from '../simple-icon/simple-icon.component';
+import { MatRippleModule } from '@angular/material/core';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -14,12 +17,15 @@ import { hex2rgb } from '../../entity/colors';
   imports: [
     CommonModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatRippleModule,
+    SimpleIconComponent
   ]
 })
 export class LoginComponent implements OnInit, AfterViewInit {
 
   private redirectTo: string = "/";
+  public sk: IconsInterface = DEVICONS;
 
   constructor(
     private artworks: ArtworksService,

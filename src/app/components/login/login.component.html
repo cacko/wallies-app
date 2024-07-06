@@ -12,28 +12,26 @@
     </div>
 </div>
 <ng-template #showLogin>
-    <p>
-        You have to login with your google account or just if you prefer use the site as guest
-    </p>
     <div buttons>
-        <div>
-            <button
-                mat-flat-button
-                (click)="login_google()"
-            >
-                <mat-icon>login</mat-icon>
-                Login with Google
-            </button>
-        </div>
-        <div>
-            <button
-                mat-flat-button
-                color="primary"
-                (click)="login_anon()"
-            >
-                <mat-icon>accessibility_new</mat-icon>
-                Login as Guest
-            </button>
-        </div>
+        <button
+            matRipple
+            mat-raised-button
+            button-with-icon
+            with-google
+            (click)="login_google()"
+        >
+            <app-simple-icon [icon]="sk['google']"></app-simple-icon>
+            with Google
+        </button>
+        <button
+            matRipple
+            mat-raised-button
+            anon
+            button-with-icon
+            (click)="login_anon()"
+        >
+            <app-simple-icon [icon]="sk['firebase']"></app-simple-icon>
+            as Guest
+        </button>
     </div>
 </ng-template>
