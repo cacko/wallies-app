@@ -21,7 +21,7 @@ tasks:
   deploy:
     desc: deploy
     cmds:
-      - ng build --configuration production --service-worker
+      - ng build 
       - tar cfz dist.tgz dist/{{.PROJECT}}
       - scp dist.tgz open:/var/www/{{.PROJECT}}
       - ssh open rm -rf /var/www/{{.PROJECT}}/dist
