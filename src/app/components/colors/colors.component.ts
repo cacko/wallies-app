@@ -8,15 +8,15 @@ import { MatRippleModule } from '@angular/material/core';
 import { ColorsService } from '../../service/colors.service';
 
 @Component({
-  selector: 'app-colors',
-  templateUrl: './colors.component.html',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatRippleModule
-  ]
+    selector: 'app-colors',
+    templateUrl: './colors.component.html',
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatButtonToggleModule,
+        MatRippleModule
+    ]
 })
 export class ColorsComponent implements OnInit {
   @Input() vertical: boolean = false;

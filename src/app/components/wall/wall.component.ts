@@ -32,17 +32,16 @@ export interface RouteFilter {
 }
 
 @Component({
-  selector: 'app-wall',
-  templateUrl: './wall.component.html',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ImageComponent,
-    ScrollingModule,
-    RouterModule,
-    ColorsComponent
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-wall',
+    templateUrl: './wall.component.html',
+    imports: [
+        CommonModule,
+        ImageComponent,
+        ScrollingModule,
+        RouterModule,
+        ColorsComponent
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WallComponent implements OnInit {
   @Input() filterBy: RouteFilter = { c: [] };

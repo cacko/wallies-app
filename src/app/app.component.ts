@@ -12,7 +12,6 @@ import { LoaderService } from './service/loader.service';
 import { CommonModule } from '@angular/common';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { ColorsComponent } from './components/colors/colors.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -23,22 +22,21 @@ import { ColorsService } from './service/colors.service';
 
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatToolbarModule,
-    ColorsComponent,
-    MatButtonModule,
-    MatIconModule,
-    MatDividerModule,
-    MatMenuModule,
-    RouterModule,
-    AvatarComponent,
-    LoaderComponent
-  ]
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatIconModule,
+        MatDividerModule,
+        MatMenuModule,
+        RouterModule,
+        AvatarComponent,
+        LoaderComponent
+    ]
 })
 export class AppComponent implements OnInit {
   updating = false;

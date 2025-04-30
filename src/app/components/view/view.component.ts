@@ -16,18 +16,18 @@ interface RouteDataEntity {
 }
 
 @Component({
-  selector: 'app-view',
-  templateUrl: './view.component.html',
-  styleUrls: ['./view.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatProgressSpinnerModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatButtonModule,
-    DragScrollDirective
-  ]
+    selector: 'app-view',
+    templateUrl: './view.component.html',
+    styleUrls: ['./view.component.scss'],
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatProgressSpinnerModule,
+        MatIconModule,
+        MatTooltipModule,
+        MatButtonModule,
+        DragScrollDirective
+    ]
 })
 export class ViewComponent implements OnInit {
   data!: WallEntity;

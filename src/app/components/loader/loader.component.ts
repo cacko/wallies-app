@@ -4,10 +4,10 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { LoaderService } from '../../service/loader.service';
 
 @Component({
-  selector: 'app-loader',
-  standalone: true,
-  imports: [CommonModule, MatProgressBarModule],
-  templateUrl: './loader.component.html',
+    selector: 'app-loader',
+    imports: [CommonModule, MatProgressBarModule],
+    standalone: true,
+    templateUrl: './loader.component.html'
 })
 export class LoaderComponent implements OnInit {
 

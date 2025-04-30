@@ -5,7 +5,8 @@ import { distanceFrom } from '../entity/colors';
 import { isEmpty, isString } from 'lodash-es';
 
 @Pipe({
-  name: 'wallFilter',
+    name: 'wallFilter',
+    standalone: false
 })
 export class WallFilterPipe implements PipeTransform {
   transform(items: WallEntity[], filter: RouteFilter): WallEntity[] {

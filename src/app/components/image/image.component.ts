@@ -6,15 +6,13 @@ import { MatCardModule } from "@angular/material/card"
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 
 @Component({
-  selector: 'app-image',
-  templateUrl: './image.component.html',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatCardModule,
-    NgOptimizedImage
-
-  ]
+    selector: 'app-image',
+    templateUrl: './image.component.html',
+    imports: [
+        CommonModule,
+        MatCardModule,
+        NgOptimizedImage
+    ]
 })
 export class ImageComponent implements OnInit {
   src: string = '';

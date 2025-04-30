@@ -4,10 +4,12 @@
 @use "./scss/theme" as Theme;
 @use "./scss/login" as Login;
 
-@include mat.core();
+@include mat.elevation-classes();
+@include mat.app-background();
 
 html {
-  @include mat.core-theme(Theme.$theme);
+  @include mat.elevation-classes();
+  @include mat.app-background();
   @include mat.all-component-themes(Theme.$theme);
   @include mat.typography-hierarchy(Theme.$typography);
   @include Colors.apply-theme(Theme.$theme);

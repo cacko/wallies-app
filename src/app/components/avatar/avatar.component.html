@@ -1,6 +1,5 @@
 <img
-    *ngIf="user.photoURL"
-    [ngSrc]="user.photoURL"
+    [ngSrc]="user.photoURL || '/assets/icons/apple-touch-icon.png'"
     fill
     priority
 >

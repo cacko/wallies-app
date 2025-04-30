@@ -11,16 +11,15 @@ import { DEVICONS, IconsInterface } from '../../entity/icons.entity';
 import { SimpleIconComponent } from '../simple-icon/simple-icon.component';
 import { MatRippleModule } from '@angular/material/core';
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    MatIconModule,
-    MatRippleModule,
-    SimpleIconComponent
-  ]
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatIconModule,
+        MatRippleModule,
+        SimpleIconComponent
+    ]
 })
 export class LoginComponent implements OnInit, AfterViewInit {
 
