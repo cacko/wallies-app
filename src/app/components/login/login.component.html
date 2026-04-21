@@ -1,37 +1,38 @@
-<div *ngIf="user.user | async as user; else showLogin">
+@if (user.user | async; as user) {
+  <div>
     <h1>Hello {{ user.displayName }}!</h1>
     <div>
-        <button
-            mat-flat-button
-            color="primary"
-            (click)="logout()"
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="logout()"
         >
-            <mat-icon>logout</mat-icon>
-            Logout
-        </button>
+        <mat-icon>logout</mat-icon>
+        Logout
+      </button>
     </div>
-</div>
-<ng-template #showLogin>
-    <div buttons>
-        <button
-            matRipple
-            mat-raised-button
-            button-with-icon
-            with-google
-            (click)="login_google()"
-        >
-            <app-simple-icon [icon]="sk['google']"></app-simple-icon>
-            with Google
-        </button>
-        <button
-            matRipple
-            mat-raised-button
-            anon
-            button-with-icon
-            (click)="login_anon()"
-        >
-            <app-simple-icon [icon]="sk['firebase']"></app-simple-icon>
-            as Guest
-        </button>
-    </div>
-</ng-template>
+  </div>
+} @else {
+  <div buttons>
+    <button
+      matRipple
+      mat-raised-button
+      button-with-icon
+      with-google
+      (click)="login_google()"
+      >
+      <app-simple-icon [icon]="sk['google']"></app-simple-icon>
+      with Google
+    </button>
+    <button
+      matRipple
+      mat-raised-button
+      anon
+      button-with-icon
+      (click)="login_anon()"
+      >
+      <app-simple-icon [icon]="sk['firebase']"></app-simple-icon>
+      as Guest
+    </button>
+  </div>
+}

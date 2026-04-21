@@ -1,4 +1,4 @@
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { User } from "@angular/fire/auth";
 import { MatRippleModule } from '@angular/material/core';
@@ -13,10 +13,9 @@ interface ImageStyle {
     templateUrl: './avatar.component.html',
     standalone: true,
     imports: [
-        CommonModule,
-        NgOptimizedImage,
-        MatRippleModule
-    ]
+    NgOptimizedImage,
+    MatRippleModule
+]
 })
 export class AvatarComponent  implements OnInit {
   @Input() user !: User;
@@ -26,7 +25,7 @@ export class AvatarComponent  implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-      console.log(this.user);
+
   }
 
 }

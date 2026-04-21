@@ -19,7 +19,7 @@ import { ArtworksService } from '../../service/artworks.service';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { LoaderService } from '../../service/loader.service';
-import { CommonModule } from '@angular/common';
+
 import { ImageComponent } from '../image/image.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ApiService } from '../../service/api.service';
@@ -35,12 +35,11 @@ export interface RouteFilter {
     selector: 'app-wall',
     templateUrl: './wall.component.html',
     imports: [
-        CommonModule,
-        ImageComponent,
-        ScrollingModule,
-        RouterModule,
-        ColorsComponent
-    ],
+    ImageComponent,
+    ScrollingModule,
+    RouterModule,
+    ColorsComponent
+],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WallComponent implements OnInit {

@@ -1,25 +1,26 @@
 
 <cdk-virtual-scroll-viewport
-    itemSize="25"
-    class="viewport"
-    minBufferPx="3000"
-    maxBufferPx="5000"
->
-    <div grid>
-        <div
-            grid-item
-            *cdkVirtualFor="let photo of items"
-        >
-            <app-image
-                item
-                [data]="photo"
-                *ngIf="photo"
-                [routerLink]="'v/' + photo.id"
-            ></app-image>
-        </div>
+  itemSize="25"
+  class="viewport"
+  minBufferPx="3000"
+  maxBufferPx="5000"
+  >
+  <div grid>
+    <div
+      grid-item
+      *cdkVirtualFor="let photo of items"
+      >
+      @if (photo) {
+        <app-image
+          item
+          [data]="photo"
+          [routerLink]="'v/' + photo.id"
+        ></app-image>
+      }
     </div>
+  </div>
 </cdk-virtual-scroll-viewport>
 <app-colors
-    [vertical]="true"
-    (selected)="onColorChange($event)"
+  [vertical]="true"
+  (selected)="onColorChange($event)"
 ></app-colors>

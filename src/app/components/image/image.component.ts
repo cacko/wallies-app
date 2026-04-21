@@ -3,16 +3,15 @@ import { Dialog } from '@angular/cdk/dialog';
 import { fromEvent } from 'rxjs';
 import { WallEntity } from '../../entity/api.entity';
 import { MatCardModule } from "@angular/material/card"
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
     selector: 'app-image',
     templateUrl: './image.component.html',
     imports: [
-        CommonModule,
-        MatCardModule,
-        NgOptimizedImage
-    ]
+    MatCardModule,
+    NgOptimizedImage
+]
 })
 export class ImageComponent implements OnInit {
   src: string = '';
